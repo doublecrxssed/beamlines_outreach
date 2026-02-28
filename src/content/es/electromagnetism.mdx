@@ -1,39 +1,39 @@
 ---
-title: "Electromagnetism"
+title: "Electromagnetismo"
 ---
 
-# Electromagnetism
+# Electromagnetismo
 
-In the previous lesson, we used Electric and Magnetic fields to build a Particle Accelerator. But where do these magical fields come from? 
+En la lección anterior, usamos campos Eléctricos y Magnéticos para construir un Acelerador de Partículas. Pero, ¿de dónde provienen estos campos mágicos?
 
-For centuries, mankind thought electricity (like lightning) and magnetism (like compass needles) were completely different things. Then, a scientist named Michael Faraday realized they were two sides of the exact same coin: **Electromagnetism**.
+Durante siglos, la humanidad pensó que la electricidad (como los rayos) y el magnetismo (como las agujas de las brújulas) eran cosas completamente diferentes. Entonces, un científico llamado Michael Faraday se dio cuenta de que eran dos caras de la misma moneda exacta: el **Electromagnetismo**.
 
-Have you ever seen a bicycle with a small light that only turns on when you pedal? There are no batteries inside! Instead, a magnet rubs against a coil of copper wire. As you pedal, the *movement* of the magnet forces electrons inside the wire to move, creating electricity. 
+¿Alguna vez has visto una bicicleta con una pequeña luz que solo se enciende cuando pedaleas? ¡No hay baterías adentro! En cambio, un imán frota contra una bobina de alambre de cobre. Mientras pedaleas, el *movimiento* del imán obliga a los electrones dentro del alambre a moverse, creando electricidad.
 
-This is called **Electromagnetic Induction**.
+Esto se llama **Inducción Electromagnética**.
 
-### The Dynamo Experiment
+### El Experimento del Dinamo
 
-Let's act like a bicycle dynamo. We have a copper coil attached to a lightbulb, and a permanent bar magnet. 
+Actuemos como un dinamo de bicicleta. Tenemos una bobina de cobre conectada a una bombilla, y un imán de barra permanente.
 
-**Your Goal:** Generate enough electricity to turn on the lightbulb.
-*   **Step 1:** Grab the magnet and drop it inside the wire coil. Notice that the meter (galvanometer) doesn't move. If the magnet is *still*, no electricity is generated.
-*   **Step 2:** Now, drag the magnet back and forth through the coil. Notice the meter swinging!
-*   **Step 3:** Try dragging it slowly, then dragging it quickly. **Velocity matters.** The faster the invisible magnetic field lines cut through the copper wire, the stronger the electrical current.
-*   **Step 4:** Scrub the magnet back and forth as fast as you can until the lightbulb glows bright!
+**Tu Objetivo:** Genera suficiente electricidad para encender la bombilla.
+*   **Paso 1:** Agarra el imán y déjalo caer dentro de la bobina de alambre. Nota que el medidor (galvanómetro) no se mueve. Si el imán está *quieto*, no se genera electricidad.
+*   **Paso 2:** Ahora, arrastra el imán de un lado a otro a través de la bobina. ¡Nota cómo el medidor oscila!
+*   **Paso 3:** Intenta arrastrarlo lentamente, y luego rápidamente. **La velocidad importa.** Cuanto más rápido cortan el alambre de cobre las líneas invisibles del campo magnético, más fuerte es la corriente eléctrica.
+*   **Paso 4:** ¡Frota el imán de un lado a otro tan rápido como puedas hasta que la bombilla brille con fuerza!
 
 <InductionCoil />
 
-<MathGate buttonText="Reveal Faraday's Law">
-  Faraday's Law of Induction states that the induced electromotive force ($\mathcal{E}$) in any closed circuit is equal to the negative of the time rate of change of the magnetic flux ($\Phi_B$) enclosed by the circuit: $\mathcal{E} = -N \frac{d\Phi_B}{dt}$. The faster the flux changes (velocity of the magnet), the higher the voltage.
+<MathGate buttonText="Revelar la Ley de Faraday">
+  La Ley de Inducción de Faraday establece que la fuerza electromotriz inducida ($\mathcal{E}$) en cualquier circuito cerrado es igual al negativo de la tasa de cambio temporal del flujo magnético ($\Phi_B$) encerrado por el circuito: $\mathcal{E} = -N \frac{d\Phi_B}{dt}$. Cuanto más rápido cambia el flujo (velocidad del imán), mayor es el voltaje.
 </MathGate>
 
-### Checkpoint
+### Punto de Control
 
-Let's test your understanding of how to generate electricity.
+Pongamos a prueba tu comprensión sobre cómo generar electricidad.
 
 <CheckpointQuiz 
-  question="If you place a very strong magnet perfectly still inside a copper wire coil, how much electricity will be generated?"
-  options='[{"text":"Zero. Nothing happens.","isCorrect":true},{"text":"A small amount of electricity.","isCorrect":false},{"text":"A large amount of electricity.","isCorrect":false}]'
-  explanation="Correct! A static magnetic field does nothing to electrons. The magnetic field must be CHANGING (moving) to induce an electrical current. Motion is required!"
+  question="Si colocas un imán muy fuerte perfectamente quieto dentro de una bobina de alambre de cobre, ¿cuánta electricidad se generará?"
+  options='[{"text":"Cero. No pasa nada.","isCorrect":true},{"text":"Una pequeña cantidad de electricidad.","isCorrect":false},{"text":"Una gran cantidad de electricidad.","isCorrect":false}]'
+  explanation="¡Correcto! Un campo magnético estático no le hace nada a los electrones. El campo magnético debe estar CAMBIANDO (moviéndose) para inducir una corriente eléctrica. ¡Se requiere movimiento!"
 />

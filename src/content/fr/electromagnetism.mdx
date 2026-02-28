@@ -1,39 +1,39 @@
 ---
-title: "Electromagnetism"
+title: "Électromagnétisme"
 ---
 
-# Electromagnetism
+# Électromagnétisme
 
-In the previous lesson, we used Electric and Magnetic fields to build a Particle Accelerator. But where do these magical fields come from? 
+Dans la leçon précédente, nous avons utilisé des champs Électriques et Magnétiques pour construire un Accélérateur de Particules. Mais d'où viennent ces champs magiques ?
 
-For centuries, mankind thought electricity (like lightning) and magnetism (like compass needles) were completely different things. Then, a scientist named Michael Faraday realized they were two sides of the exact same coin: **Electromagnetism**.
+Pendant des siècles, l'humanité a pensé que l'électricité (comme la foudre) et le magnétisme (comme les aiguilles de boussole) étaient des choses complètement différentes. Puis, un scientifique nommé Michael Faraday a réalisé qu'il s'agissait des deux faces de la même pièce : **l'Électromagnétisme**.
 
-Have you ever seen a bicycle with a small light that only turns on when you pedal? There are no batteries inside! Instead, a magnet rubs against a coil of copper wire. As you pedal, the *movement* of the magnet forces electrons inside the wire to move, creating electricity. 
+Avez-vous déjà vu un vélo avec une petite lumière qui ne s'allume que lorsque vous pédalez ? Il n'y a pas de piles à l'intérieur ! Au lieu de cela, un aimant frotte contre une bobine de fil de cuivre. Lorsque vous pédalez, le *mouvement* de l'aimant force les électrons à l'intérieur du fil à bouger, créant ainsi de l'électricité.
 
-This is called **Electromagnetic Induction**.
+C'est ce qu'on appelle **l'Induction Électromagnétique**.
 
-### The Dynamo Experiment
+### L'Expérience de la Dynamo
 
-Let's act like a bicycle dynamo. We have a copper coil attached to a lightbulb, and a permanent bar magnet. 
+Agissons comme une dynamo de vélo. Nous avons une bobine de cuivre attachée à une ampoule, et un aimant droit permanent.
 
-**Your Goal:** Generate enough electricity to turn on the lightbulb.
-*   **Step 1:** Grab the magnet and drop it inside the wire coil. Notice that the meter (galvanometer) doesn't move. If the magnet is *still*, no electricity is generated.
-*   **Step 2:** Now, drag the magnet back and forth through the coil. Notice the meter swinging!
-*   **Step 3:** Try dragging it slowly, then dragging it quickly. **Velocity matters.** The faster the invisible magnetic field lines cut through the copper wire, the stronger the electrical current.
-*   **Step 4:** Scrub the magnet back and forth as fast as you can until the lightbulb glows bright!
+**Votre Objectif :** Générer suffisamment d'électricité pour allumer l'ampoule.
+*   **Étape 1 :** Saisissez l'aimant et laissez-le tomber à l'intérieur de la bobine de fil. Remarquez que le compteur (galvanomètre) ne bouge pas. Si l'aimant est *immobile*, aucune électricité n'est générée.
+*   **Étape 2 :** Maintenant, faites glisser l'aimant d'avant en arrière à travers la bobine. Remarquez que le compteur oscille !
+*   **Étape 3 :** Essayez de le faire glisser lentement, puis rapidement. **La vitesse compte.** Plus les lignes invisibles du champ magnétique coupent rapidement le fil de cuivre, plus le courant électrique est fort.
+*   **Étape 4 :** Frottez l'aimant d'avant en arrière aussi vite que vous le pouvez jusqu'à ce que l'ampoule brille de mille feux !
 
 <InductionCoil />
 
-<MathGate buttonText="Reveal Faraday's Law">
-  Faraday's Law of Induction states that the induced electromotive force ($\mathcal{E}$) in any closed circuit is equal to the negative of the time rate of change of the magnetic flux ($\Phi_B$) enclosed by the circuit: $\mathcal{E} = -N \frac{d\Phi_B}{dt}$. The faster the flux changes (velocity of the magnet), the higher the voltage.
+<MathGate buttonText="Révéler la Loi de Faraday">
+  La loi de l'induction de Faraday stipule que la force électromotrice induite ($\mathcal{E}$) dans tout circuit fermé est égale à l'opposé du taux de variation temporelle du flux magnétique ($\Phi_B$) enfermé par le circuit : $\mathcal{E} = -N \frac{d\Phi_B}{dt}$. Plus le flux change vite (vitesse de l'aimant), plus la tension est élevée.
 </MathGate>
 
-### Checkpoint
+### Point de Contrôle
 
-Let's test your understanding of how to generate electricity.
+Testons votre compréhension de la façon dont l'électricité est générée.
 
 <CheckpointQuiz 
-  question="If you place a very strong magnet perfectly still inside a copper wire coil, how much electricity will be generated?"
-  options='[{"text":"Zero. Nothing happens.","isCorrect":true},{"text":"A small amount of electricity.","isCorrect":false},{"text":"A large amount of electricity.","isCorrect":false}]'
-  explanation="Correct! A static magnetic field does nothing to electrons. The magnetic field must be CHANGING (moving) to induce an electrical current. Motion is required!"
+  question="Si vous placez un aimant très puissant parfaitement immobile à l'intérieur d'une bobine de fil de cuivre, quelle quantité d'électricité sera générée ?"
+  options='[{"text":"Zéro. Rien ne se passe.","isCorrect":true},{"text":"Une petite quantité d`électricité.","isCorrect":false},{"text":"Une grande quantité d`électricité.","isCorrect":false}]'
+  explanation="C'est exact ! Un champ magnétique statique ne fait rien aux électrons. Le champ magnétique doit CHANGER (bouger) pour induire un courant électrique. Le mouvement est obligatoire !"
 />
