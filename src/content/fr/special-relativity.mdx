@@ -1,39 +1,39 @@
 ---
-title: "Special Relativity"
+title: "Relativité Restreinte"
 ---
 
-# Special Relativity
+# Relativité Restreinte
 
-Imagine you are standing on a train platform, and a super-fast express train zooms past you. If you could somehow see the clock inside the train, and measure the train itself while it was moving, what would you see?
+Imaginez que vous êtes debout sur un quai de gare, et qu'un train express ultra-rapide passe devant vous à toute vitesse. Si vous pouviez d'une manière ou d'une autre voir l'horloge à l'intérieur du train, et mesurer le train lui-même pendant qu'il se déplaçait, que verriez-vous ?
 
-Before Albert Einstein, physicists believed that space and time were absolute. A clock ticks at the same speed everywhere, and a one-meter stick is always one meter long. 
+Avant Albert Einstein, les physiciens croyaient que l'espace et le temps étaient absolus. Une horloge bat au même rythme partout, et un bâton d'un mètre fait toujours un mètre de long.
 
-But Einstein realized something horrifying: **The speed of light is the only absolute thing in the universe.** No matter how fast you are moving, light always travels at exactly 299,792,458 meters per second ($c$). 
+Mais Einstein a réalisé quelque chose d'effrayant : **La vitesse de la lumière est la seule chose absolue dans l'univers.** Peu importe à quelle vitesse vous vous déplacez, la lumière voyage toujours exactement à 299 792 458 mètres par seconde ($c$).
 
-Because the speed of light cannot change, something else *must* change. When objects move very fast (close to $c$), **Space** squishes and **Time** slows down! 
+Parce que la vitesse de la lumière ne peut pas changer, autre chose *doit* changer. Quand les objets se déplacent très vite (près de $c$), **l'Espace** se comprime et le **Temps** ralentit !
 
-### The Relativistic Railway
+### Le Chemin de Fer Relativiste
 
-We are going to simulate a train platform where the train can travel up to 99% the speed of light. Both you (standing on the platform) and a passenger (sitting on the train) have identical stopwatches.
+Nous allons simuler un quai de gare où le train peut voyager jusqu'à 99% de la vitesse de la lumière. Vous (debout sur le quai) et un passager (assis dans le train) avez des chronomètres identiques.
 
-**Your Goal:** Observe how extreme velocity distorts reality.
-*   **Step 1:** Look at the two stopwatches ticking at normal speed (`0.0c`). They are synchronized.
-*   **Step 2:** Push the **Velocity Throttle** up to exactly `0.5c` (half the speed of light). What happens to the train's clock? What happens to the train's shape?
-*   **Step 3:** Push the throttle to `0.99c`. Notice how the train squishes into a pancake, and the clock almost stops! This is called **Length Contraction** and **Time Dilation**.
-*   **Step 4:** Now, click the **"View from Train"** button. Suddenly, the train passenger thinks *they* are stationary, and the *platform* is zooming backward! Whose clock is ticking slower now?
+**Votre Objectif :** Observer comment la vitesse extrême déforme la réalité.
+*   **Étape 1 :** Regardez les deux chronomètres battre à vitesse normale (`0.0c`). Ils sont synchronisés.
+*   **Étape 2 :** Poussez la **Manette de Vitesse** jusqu'à exactement `0.5c` (la moitié de la vitesse de la lumière). Que se passe-t-il avec l'horloge du train ? Que se passe-t-il avec la forme du train ?
+*   **Étape 3 :** Poussez la manette à `0.99c`. Remarquez comment le train s'écrase comme une crêpe, et l'horloge s'arrête presque ! C'est ce qu'on appelle la **Contraction des Longueurs** et la **Dilatation du Temps**.
+*   **Étape 4 :** Maintenant, cliquez sur le bouton **« Vue depuis le Train »**. Soudain, le passager du train pense que *lui* est stationnaire, et que le *quai* recule à toute vitesse ! L'horloge de qui bat plus lentement maintenant ?
 
 <RelativisticTrain />
 
-<MathGate buttonText="Reveal the Lorentz Factor">
-  The amount of distortion is determined by the Lorentz Factor, denoted by $\gamma$ (gamma): $\gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}$. As velocity ($v$) approaches the speed of light ($c$), $\gamma$ approaches infinity. Time for the moving observer is calculated as $t' = \frac{t}{\gamma}$, meaning it gets vastly smaller (time slows down).
+<MathGate buttonText="Révéler le Facteur de Lorentz">
+  La quantité de distorsion est déterminée par le Facteur de Lorentz, noté $\gamma$ (gamma) : $\gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}$. Lorsque la vitesse ($v$) se rapproche de la vitesse de la lumière ($c$), $\gamma$ tend vers l'infini. Le temps pour l'observateur en mouvement est calculé comme $t' = \frac{t}{\gamma}$, ce qui signifie qu'il devient considérablement plus petit (le temps ralentit).
 </MathGate>
 
-### Checkpoint
+### Point de Contrôle
 
-Let's test what you just experienced on the railway.
+Testons ce que vous venez de vivre sur le chemin de fer.
 
 <CheckpointQuiz 
-  question="You are standing on a platform, watching a train zoom by at 99% the speed of light. Compared to your watch, what happens to a clock inside the train?"
-  options='[{"text":"It ticks much faster than your watch.","isCorrect":false},{"text":"It ticks at the exact same speed as your watch.","isCorrect":false},{"text":"It ticks much slower than your watch.","isCorrect":true},{"text":"It runs backward.","isCorrect":false}]'
-  explanation="Correct! This is Time Dilation. From the perspective of a stationary observer, time moves significantly slower for an object traveling close to the speed of light."
+  question="Vous êtes debout sur un quai, regardant un train passer à 99% de la vitesse de la lumière. Par rapport à votre montre, que se passe-t-il avec une horloge à l'intérieur du train ?"
+  options='[{"text":"Elle bat beaucoup plus vite que votre montre.","isCorrect":false},{"text":"Elle bat exactement à la même vitesse que votre montre.","isCorrect":false},{"text":"Elle bat beaucoup plus lentement que votre montre.","isCorrect":true},{"text":"Elle tourne à l`envers.","isCorrect":false}]'
+  explanation="Exact ! C'est la Dilatation du Temps. Du point de vue d'un observateur stationnaire, le temps passe considérablement plus lentement pour un objet voyageant proche de la vitesse de la lumière."
 />

@@ -1,39 +1,39 @@
 ---
-title: "Special Relativity"
+title: "Relativiti Khas"
 ---
 
-# Special Relativity
+# Relativiti Khas
 
-Imagine you are standing on a train platform, and a super-fast express train zooms past you. If you could somehow see the clock inside the train, and measure the train itself while it was moving, what would you see?
+Bayangkan anda berdiri di platform stesen kereta api, dan sebuah kereta api ekspres super laju melintas dengan pantas di hadapan anda. Jika anda entah bagaimana boleh melihat jam di dalam kereta api itu, dan mengukur kereta api itu sendiri semasa ia bergerak, apakah yang anda akan lihat?
 
-Before Albert Einstein, physicists believed that space and time were absolute. A clock ticks at the same speed everywhere, and a one-meter stick is always one meter long. 
+Sebelum Albert Einstein, ahli fizik percaya bahawa ruang dan masa adalah mutlak. Sebuah jam berdetik pada kelajuan yang sama di mana-mana, dan sebatang kayu satu meter sentiasa sepanjang satu meter.
 
-But Einstein realized something horrifying: **The speed of light is the only absolute thing in the universe.** No matter how fast you are moving, light always travels at exactly 299,792,458 meters per second ($c$). 
+Tetapi Einstein menyedari sesuatu yang mengerikan: **Kelajuan cahaya adalah satu-satunya perkara yang mutlak di alam semesta.** Tidak kira betapa laju anda bergerak, cahaya sentiasa bergerak tepat pada 299,792,458 meter sesaat ($c$).
 
-Because the speed of light cannot change, something else *must* change. When objects move very fast (close to $c$), **Space** squishes and **Time** slows down! 
+Kerana kelajuan cahaya tidak boleh berubah, sesuatu yang lain *mesti* berubah. Apabila objek bergerak sangat laju (hampir $c$), **Ruang** termampat dan **Masa** menjadi perlahan!
 
-### The Relativistic Railway
+### Landasan Kereta Api Relativistik
 
-We are going to simulate a train platform where the train can travel up to 99% the speed of light. Both you (standing on the platform) and a passenger (sitting on the train) have identical stopwatches.
+Kita akan mensimulasikan platform stesen kereta api di mana kereta api boleh bergerak sehingga 99% kelajuan cahaya. Kedua-dua anda (berdiri di platform) dan seorang penumpang (duduk di dalam kereta api) mempunyai jam randik yang sama.
 
-**Your Goal:** Observe how extreme velocity distorts reality.
-*   **Step 1:** Look at the two stopwatches ticking at normal speed (`0.0c`). They are synchronized.
-*   **Step 2:** Push the **Velocity Throttle** up to exactly `0.5c` (half the speed of light). What happens to the train's clock? What happens to the train's shape?
-*   **Step 3:** Push the throttle to `0.99c`. Notice how the train squishes into a pancake, and the clock almost stops! This is called **Length Contraction** and **Time Dilation**.
-*   **Step 4:** Now, click the **"View from Train"** button. Suddenly, the train passenger thinks *they* are stationary, and the *platform* is zooming backward! Whose clock is ticking slower now?
+**Matlamat Anda:** Perhatikan bagaimana halaju yang melampau memesongkan realiti.
+*   **Langkah 1:** Lihat dua jam randik berdetik pada kelajuan biasa (`0.0c`). Mereka disegerakkan.
+*   **Langkah 2:** Tolak **Pendikit Halaju** sehingga tepat `0.5c` (separuh kelajuan cahaya). Apa yang berlaku pada jam kereta api? Apa yang berlaku pada bentuk kereta api?
+*   **Langkah 3:** Tolak pendikit ke `0.99c`. Perhatikan bagaimana kereta api termampat seperti lempeng, dan jam hampir berhenti! Ini dipanggil **Pengecutan Panjang** dan **Pemuluran Masa**.
+*   **Langkah 4:** Sekarang, klik butang **"Pandangan dari Kereta Api."** Secara tiba-tiba, penumpang kereta api fikir *dia* yang pegun, dan *platform* yang berundur dengan laju! Jam siapa yang berdetik lebih perlahan sekarang?
 
 <RelativisticTrain />
 
-<MathGate buttonText="Reveal the Lorentz Factor">
-  The amount of distortion is determined by the Lorentz Factor, denoted by $\gamma$ (gamma): $\gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}$. As velocity ($v$) approaches the speed of light ($c$), $\gamma$ approaches infinity. Time for the moving observer is calculated as $t' = \frac{t}{\gamma}$, meaning it gets vastly smaller (time slows down).
+<MathGate buttonText="Dedahkan Faktor Lorentz">
+  Jumlah herotan ditentukan oleh Faktor Lorentz, dilambangkan oleh $\gamma$ (gamma): $\gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}$. Apabila halaju ($v$) menghampiri kelajuan cahaya ($c$), $\gamma$ menghampiri infiniti. Masa untuk pemerhati yang bergerak dikira sebagai $t' = \frac{t}{\gamma}$, bermaksud ia menjadi sangat kecil (masa menjadi perlahan).
 </MathGate>
 
-### Checkpoint
+### Titik Semakan
 
-Let's test what you just experienced on the railway.
+Mari kita uji apa yang anda baru alami di landasan kereta api.
 
 <CheckpointQuiz 
-  question="You are standing on a platform, watching a train zoom by at 99% the speed of light. Compared to your watch, what happens to a clock inside the train?"
-  options='[{"text":"It ticks much faster than your watch.","isCorrect":false},{"text":"It ticks at the exact same speed as your watch.","isCorrect":false},{"text":"It ticks much slower than your watch.","isCorrect":true},{"text":"It runs backward.","isCorrect":false}]'
-  explanation="Correct! This is Time Dilation. From the perspective of a stationary observer, time moves significantly slower for an object traveling close to the speed of light."
+  question="Anda berdiri di platform, melihat sebuah kereta api melintas pada 99% kelajuan cahaya. Berbanding jam anda, apa yang berlaku pada jam di dalam kereta api?"
+  options='[{"text":"Ia berdetik jauh lebih laju daripada jam anda.","isCorrect":false},{"text":"Ia berdetik pada kelajuan yang sama dengan jam anda.","isCorrect":false},{"text":"Ia berdetik jauh lebih perlahan daripada jam anda.","isCorrect":true},{"text":"Ia berjalan ke belakang.","isCorrect":false}]'
+  explanation="Betul! Ini ialah Pemuluran Masa. Dari perspektif pemerhati yang pegun, masa bergerak dengan ketara lebih perlahan untuk objek yang bergerak hampir dengan kelajuan cahaya."
 />

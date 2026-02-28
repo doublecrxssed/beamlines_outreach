@@ -1,39 +1,39 @@
 ---
-title: "Special Relativity"
+title: "Relatividad Especial"
 ---
 
-# Special Relativity
+# Relatividad Especial
 
-Imagine you are standing on a train platform, and a super-fast express train zooms past you. If you could somehow see the clock inside the train, and measure the train itself while it was moving, what would you see?
+Imagina que estás parado en una plataforma de tren, y un tren expreso súper rápido pasa volando frente a ti. Si de alguna manera pudieras ver el reloj dentro del tren, y medir el tren mismo mientras se movía, ¿qué verías?
 
-Before Albert Einstein, physicists believed that space and time were absolute. A clock ticks at the same speed everywhere, and a one-meter stick is always one meter long. 
+Antes de Albert Einstein, los físicos creían que el espacio y el tiempo eran absolutos. Un reloj marca al mismo ritmo en todas partes, y una barra de un metro siempre tiene un metro de largo.
 
-But Einstein realized something horrifying: **The speed of light is the only absolute thing in the universe.** No matter how fast you are moving, light always travels at exactly 299,792,458 meters per second ($c$). 
+Pero Einstein se dio cuenta de algo aterrador: **La velocidad de la luz es la única cosa absoluta en el universo.** No importa cuán rápido te muevas, la luz siempre viaja exactamente a 299.792.458 metros por segundo ($c$).
 
-Because the speed of light cannot change, something else *must* change. When objects move very fast (close to $c$), **Space** squishes and **Time** slows down! 
+Porque la velocidad de la luz no puede cambiar, algo más *tiene que* cambiar. Cuando los objetos se mueven muy rápido (cerca de $c$), ¡el **Espacio** se aplasta y el **Tiempo** se ralentiza!
 
-### The Relativistic Railway
+### El Ferrocarril Relativista
 
-We are going to simulate a train platform where the train can travel up to 99% the speed of light. Both you (standing on the platform) and a passenger (sitting on the train) have identical stopwatches.
+Vamos a simular una plataforma de tren donde el tren puede viajar hasta el 99% de la velocidad de la luz. Tanto tú (parado en la plataforma) como un pasajero (sentado en el tren) tienen cronómetros idénticos.
 
-**Your Goal:** Observe how extreme velocity distorts reality.
-*   **Step 1:** Look at the two stopwatches ticking at normal speed (`0.0c`). They are synchronized.
-*   **Step 2:** Push the **Velocity Throttle** up to exactly `0.5c` (half the speed of light). What happens to the train's clock? What happens to the train's shape?
-*   **Step 3:** Push the throttle to `0.99c`. Notice how the train squishes into a pancake, and the clock almost stops! This is called **Length Contraction** and **Time Dilation**.
-*   **Step 4:** Now, click the **"View from Train"** button. Suddenly, the train passenger thinks *they* are stationary, and the *platform* is zooming backward! Whose clock is ticking slower now?
+**Tu Objetivo:** Observar cómo la velocidad extrema distorsiona la realidad.
+*   **Paso 1:** Mira los dos cronómetros marcando a velocidad normal (`0.0c`). Están sincronizados.
+*   **Paso 2:** Empuja el **Acelerador de Velocidad** hasta exactamente `0.5c` (la mitad de la velocidad de la luz). ¿Qué le pasa al reloj del tren? ¿Qué le pasa a la forma del tren?
+*   **Paso 3:** Empuja el acelerador hasta `0.99c`. ¡Nota cómo el tren se aplasta como un panqueque, y el reloj casi se detiene! Esto se llama **Contracción de Longitud** y **Dilatación del Tiempo**.
+*   **Paso 4:** Ahora, haz clic en el botón **"Ver desde el Tren."** ¡De repente, el pasajero del tren piensa que *él* está estacionario, y la *plataforma* retrocede a toda velocidad! ¿El reloj de quién marca más lento ahora?
 
 <RelativisticTrain />
 
-<MathGate buttonText="Reveal the Lorentz Factor">
-  The amount of distortion is determined by the Lorentz Factor, denoted by $\gamma$ (gamma): $\gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}$. As velocity ($v$) approaches the speed of light ($c$), $\gamma$ approaches infinity. Time for the moving observer is calculated as $t' = \frac{t}{\gamma}$, meaning it gets vastly smaller (time slows down).
+<MathGate buttonText="Revelar el Factor de Lorentz">
+  La cantidad de distorsión es determinada por el Factor de Lorentz, denotado por $\gamma$ (gamma): $\gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}$. A medida que la velocidad ($v$) se acerca a la velocidad de la luz ($c$), $\gamma$ se acerca al infinito. El tiempo para el observador en movimiento se calcula como $t' = \frac{t}{\gamma}$, lo que significa que se vuelve enormemente más pequeño (el tiempo se ralentiza).
 </MathGate>
 
-### Checkpoint
+### Punto de Control
 
-Let's test what you just experienced on the railway.
+Pongamos a prueba lo que acabas de experimentar en el ferrocarril.
 
 <CheckpointQuiz 
-  question="You are standing on a platform, watching a train zoom by at 99% the speed of light. Compared to your watch, what happens to a clock inside the train?"
-  options='[{"text":"It ticks much faster than your watch.","isCorrect":false},{"text":"It ticks at the exact same speed as your watch.","isCorrect":false},{"text":"It ticks much slower than your watch.","isCorrect":true},{"text":"It runs backward.","isCorrect":false}]'
-  explanation="Correct! This is Time Dilation. From the perspective of a stationary observer, time moves significantly slower for an object traveling close to the speed of light."
+  question="Estás parado en una plataforma, viendo un tren pasar a toda velocidad al 99% de la velocidad de la luz. Comparado con tu reloj, ¿qué le pasa a un reloj dentro del tren?"
+  options='[{"text":"Marca mucho más rápido que tu reloj.","isCorrect":false},{"text":"Marca exactamente a la misma velocidad que tu reloj.","isCorrect":false},{"text":"Marca mucho más lento que tu reloj.","isCorrect":true},{"text":"Va hacia atrás.","isCorrect":false}]'
+  explanation="¡Correcto! Esto es la Dilatación del Tiempo. Desde la perspectiva de un observador estacionario, el tiempo se mueve significativamente más lento para un objeto que viaja cerca de la velocidad de la luz."
 />

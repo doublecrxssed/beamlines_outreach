@@ -1,39 +1,39 @@
 ---
-title: "Quantum States"
+title: "Estados Cuánticos"
 ---
 
-# Quantum States
+# Estados Cuánticos
 
-The rules of physics we've discussed so far apply to big things: cars, magnets, apples. But when you zoom into the atomic scale, the universe stops making sense.
+Las reglas de la física que hemos discutido hasta ahora se aplican a cosas grandes: autos, imanes, manzanas. Pero cuando te acercas a la escala atómica, el universo deja de tener sentido.
 
-Welcome to Quantum Mechanics.
+Bienvenido a la Mecánica Cuántica.
 
-In our everyday world, objects have definite forms. A coin sitting on a table is either "Heads" or it is "Tails." But in the quantum world, particles exist in a state called **Superposition**. Until you actually look at them, they aren't one thing or the other; they are a blurry combination of *all possible states at once*.
+En nuestro mundo cotidiano, los objetos tienen formas definidas. Una moneda sobre una mesa es "Cara" o es "Cruz." Pero en el mundo cuántico, las partículas existen en un estado llamado **Superposición**. Hasta que realmente las observas, no son una cosa u otra; son una combinación borrosa de *todos los estados posibles a la vez*.
 
-Instead of trying to imagine a particle inside a box, imagine a coin spinning very fast in mid-air. As long as it is spinning, is it Heads or Tails? It's neither! It is a blur of both.
+En lugar de intentar imaginar una partícula dentro de una caja, imagina una moneda girando muy rápido en el aire. Mientras está girando, ¿es Cara o Cruz? ¡No es ninguna! Es una mezcla borrosa de ambas.
 
-### The Quantum Coin Toss
+### El Lanzamiento Cuántico de Moneda
 
-Let's do an experiment. Below is a quantum coin in superposition.
+Hagamos un experimento. A continuación hay una moneda cuántica en superposición.
 
-**Your Goal:** Observe the system.
-*   **Step 1:** Look at the spinning coin. It is a blur of probability.
-*   **Step 2:** Click the **"Catch the Coin"** button. By interacting with it (observing it), the "wave function" collapses instantly. It is forced to pick a side!
-*   **Step 3:** Toss it a few times to see that it's random.
-*   **Step 4:** Once you've caught it 3 times, click the **"Toss 100 Coins at Once"** tab. What happens when a macroscopic observation wave forces 100 superpositions to collapse at the exact same moment?
+**Tu Objetivo:** Observar el sistema.
+*   **Paso 1:** Mira la moneda girando. Es una mezcla borrosa de probabilidad.
+*   **Paso 2:** Haz clic en el botón **"Atrapar la Moneda."** Al interactuar con ella (observarla), la "función de onda" colapsa instantáneamente. ¡Se ve obligada a elegir un lado!
+*   **Paso 3:** Lánzala varias veces para ver que es aleatorio.
+*   **Paso 4:** Una vez que la hayas atrapado 3 veces, haz clic en la pestaña **"Lanzar 100 Monedas a la Vez."** ¿Qué sucede cuando una onda de observación macroscópica obliga a 100 superposiciones a colapsar en el mismo instante exacto?
 
 <QuantumCoin />
 
-<MathGate buttonText="Reveal Schrödinger's Equation">
-  A quantum state is described by a wave function, $\Psi(x,t)$. According to the Born Rule, the probability of finding a particle at a specific position is given by the square of the amplitude of its wave function: $P(x) = |\Psi(x,t)|^2$. Before measurement, the system evolves deterministically via Schrödinger's Equation: $i\hbar \frac{\partial}{\partial t}\Psi = \hat{H}\Psi$. Upon measurement, the wave function "collapses" into a single definite state.
+<MathGate buttonText="Revelar la Ecuación de Schrödinger">
+  Un estado cuántico es descrito por una función de onda, $\Psi(x,t)$. Según la Regla de Born, la probabilidad de encontrar una partícula en una posición específica está dada por el cuadrado de la amplitud de su función de onda: $P(x) = |\Psi(x,t)|^2$. Antes de la medición, el sistema evoluciona determinísticamente a través de la Ecuación de Schrödinger: $i\hbar \frac{\partial}{\partial t}\Psi = \hat{H}\Psi$. Al medir, la función de onda "colapsa" en un solo estado definido.
 </MathGate>
 
-### Checkpoint
+### Punto de Control
 
-Let's check your understanding of the Observer Effect.
+Verifiquemos tu comprensión del Efecto del Observador.
 
 <CheckpointQuiz 
-  question="When a quantum particle is in 'Superposition' (like the spinning coin), what does this mean?"
-  options='[{"text":"It is rapidly switching back and forth between states.","isCorrect":false},{"text":"It exists as a combination of all possible states simultaneously.","isCorrect":true},{"text":"It has fallen asleep and stopped moving.","isCorrect":false},{"text":"We just have not looked closely enough to see its true state.","isCorrect":false}]'
-  explanation="Correct! Quantum superposition is not just 'we don't know the state yet'—the particle literally exists as a probability blur of all states until it is forced to mathematically 'pick' one upon observation."
+  question="Cuando una partícula cuántica está en 'Superposición' (como la moneda girando), ¿qué significa esto?"
+  options='[{"text":"Está cambiando rápidamente entre estados.","isCorrect":false},{"text":"Existe como una combinación de todos los estados posibles simultáneamente.","isCorrect":true},{"text":"Se ha dormido y ha dejado de moverse.","isCorrect":false},{"text":"Simplemente no hemos mirado lo suficientemente de cerca para ver su verdadero estado.","isCorrect":false}]'
+  explanation="¡Correcto! La superposición cuántica no es simplemente 'no conocemos el estado todavía'—la partícula literalmente existe como una mezcla borrosa de probabilidades de todos los estados hasta que se ve obligada a matemáticamente 'elegir' uno al ser observada."
 />
