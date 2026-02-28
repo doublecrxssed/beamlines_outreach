@@ -6,18 +6,26 @@ export function LanguageSwitcher() {
     const pathname = usePathname()
     const router = useRouter()
 
-    // Extract current language from URL (e.g., from "/en/courses/standard-model" -> "en")
-    const currentLang = pathname.split('/')[1] as 'en' | 'hi' | 'ms' | 'fr' | 'es'
+    const existingLangs = ['en', 'hi', 'ms', 'fr', 'es']
+    const currentLang = pathname.split('/')[1]
 
     const handleLanguageChange = (newLang: 'en' | 'hi' | 'ms' | 'fr' | 'es') => {
         if (newLang === currentLang) return
 
-        // Hard-replace the language prefix in the URL
-        // e.g., "/en/courses/standard-model" -> "/hi/courses/standard-model"
-        const newPath = pathname.replace(`/${currentLang}`, `/${newLang}`)
+        const segments = pathname.split('/')
 
-        // Explicit router.push() forces the Next.js server to re-render the page
-        // and fetch the correct translated MDX file, solving the MVP bug.
+        // Ensure the path correctly starts with a leading slash structure
+        if (segments[0] !== '') segments.unshift('')
+
+        // If the current path already has a language prefix, swap it. 
+        // Otherwise, insert the new language right after the root slash.
+        if (existingLangs.includes(segments[1])) {
+            segments[1] = newLang
+        } else {
+            segments.splice(1, 0, newLang)
+        }
+
+        const newPath = segments.join('/')
         router.push(newPath)
     }
 
