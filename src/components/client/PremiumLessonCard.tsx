@@ -78,8 +78,8 @@ export function PremiumLessonCard({ id, index, label, available, lang, completed
                 <div className="mt-6 flex items-center justify-between">
                     {available ? (
                         <div className={`inline-flex items-center gap-2 px-5 py-2 rounded-full font-semibold text-sm transition-all border ${completed
-                                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 group-hover:bg-emerald-500/20'
-                                : 'bg-neon-blue/10 text-neon-blue border-neon-blue/30 group-hover:bg-neon-blue/20 group-hover:border-neon-cyan'
+                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 group-hover:bg-emerald-500/20'
+                            : 'bg-neon-blue/10 text-neon-blue border-neon-blue/30 group-hover:bg-neon-blue/20 group-hover:border-neon-cyan'
                             }`}>
                             <span>{completed ? t.completed : t.start}</span>
                             <span className="transition-transform group-hover:translate-x-1">→</span>
@@ -113,7 +113,7 @@ export function PremiumLessonCard({ id, index, label, available, lang, completed
 
     if (available) {
         return (
-            <Link href={`/${lang}/${id}`} className="block">
+            <Link href={`/${lang}/courses/${id}`} className="block">
                 <motion.div
                     {...motionProps}
                     ref={cardRef}
