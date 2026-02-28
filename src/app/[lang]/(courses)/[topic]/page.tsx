@@ -5,8 +5,12 @@ import { notFound } from 'next/navigation'
 import { RevealText } from '@/components/client/RevealText'
 import { MathGate } from '@/components/client/MathGate'
 import { StandardModelSorter } from '@/components/client/StandardModelSorter'
+import { Cyclotron } from '@/components/client/Cyclotron'
+import { InductionCoil } from '@/components/client/InductionCoil'
 import { QuantumCoin } from '@/components/client/QuantumCoin'
 import { RelativisticTrain } from '@/components/client/RelativisticTrain'
+import { HiggsBazaar } from '@/components/client/HiggsBazaar'
+import { GravityCarousel } from '@/components/client/GravityCarousel'
 import { CheckpointQuiz } from '@/components/client/CheckpointQuiz'
 import { NeutrinoTrain } from '@/components/client/NeutrinoTrain'
 import { QuarkConfinement } from '@/components/client/QuarkConfinement'
@@ -29,12 +33,10 @@ export default async function TopicPage({ params }: { params: Promise<{ lang: st
                 // Automatically wrap every standard markdown paragraph in a scroll-reveal animation
                 p: (props: React.PropsWithChildren) => <RevealText>{props.children}</RevealText>,
                 MathGate: MathGate,
-                Cyclotron: () => null,
-                InductionCoil: () => null,
-                MagneticField: () => null,
-                SymmetryGraph: () => null,
-                HiggsBazaar: () => null,
-                GravityCarousel: () => null,
+                Cyclotron: (props: React.PropsWithChildren & { lang?: string }) => <Cyclotron lang={lang} {...props} />,
+                InductionCoil: (props: React.PropsWithChildren & { lang?: string }) => <InductionCoil lang={lang} {...props} />,
+                HiggsBazaar: (props: React.PropsWithChildren & { lang?: string }) => <HiggsBazaar lang={lang} {...props} />,
+                GravityCarousel: (props: React.PropsWithChildren & { lang?: string }) => <GravityCarousel lang={lang} {...props} />,
                 StandardModelSorter: (props: React.PropsWithChildren & { lang?: string }) => <StandardModelSorter lang={lang} {...props} />,
                 QuantumCoin: (props: React.PropsWithChildren & { lang?: string }) => <QuantumCoin lang={lang} {...props} />,
                 RelativisticTrain: (props: React.PropsWithChildren & { lang?: string }) => <RelativisticTrain lang={lang} {...props} />,
