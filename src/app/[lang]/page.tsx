@@ -1,4 +1,7 @@
-import Link from 'next/link'
+import { CourseHero } from '@/components/client/CourseHero'
+import { PremiumLessonCard } from '@/components/client/PremiumLessonCard'
+import { prisma } from '@/app/api/progress/route'
+import { cookies } from 'next/headers'
 
 const LESSONS = [
     { id: 'standard-model', label: 'The Standard Model', available: true },
@@ -16,65 +19,115 @@ const LESSONS = [
 export default async function CourseHub({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params
 
-    // Simple static translations
-    const t = {
-        title: lang === 'hi' ? 'पाठ्यक्रम' : 'Course Modules',
-        subtitle: lang === 'hi' ? 'ब्रह्मांड के रहस्यों को अनलॉक करें।' : 'Unlock the mysteries of the universe.',
-        lesson: lang === 'hi' ? 'पाठ' : 'Lesson',
-        locked: lang === 'hi' ? 'जल्द आ रहा है' : 'Coming Soon',
-        start: lang === 'hi' ? 'शुरू करें' : 'Start Lesson'
+    // Fetch global progress on the server to pass down to the Hero
+    let totalInteractions = 0
+    try {
+        const cookieStore = await cookies()
+        const deviceId = cookieStore.get('deviceId')?.value
+        if (deviceId) {
+            const user = await prisma.user.findUnique({ where: { deviceId } })
+            if (user) {
+                const aggr = await prisma.progress.aggregate({
+                    where: { userId: user.id },
+                    _sum: { interactions: true }
+                })
+                totalInteractions = aggr._sum.interactions || 0
+            }
+        }
+    } catch (e) {
+        // Silently fail if DB is uninitialized on build
     }
 
+    // 100 interactions across 10 lessons = 100% completion (simple heuristic)
+    const rawPercentage = (totalInteractions / 100) * 100
+    const globalProgress = Math.min(rawPercentage, 100)
+
+    // Translations
+    const t = {
+        m1Title: lang === 'hi' ? 'मॉड्यूल 1: द कोर' : 'Module 1: The Core',
+        m1Desc: lang === 'hi' ? 'पदार्थ और मूलभूत शक्तियों के निर्माण खंडों का अन्वेषण करें।' : 'Explore the building blocks of matter and the fundamental forces.',
+        m2Title: lang === 'hi' ? 'मॉड्यूल 2: द्रव्यमान, स्थान और समय' : 'Module 2: Mass, Space & Time',
+        m2Desc: lang === 'hi' ? 'सापेक्षता, द्रव्यमान की उत्पत्ति और अदृश्य ब्रह्मांड के झुकने को समझें।' : 'Understand the bending of relativity, the origins of mass, and the invisible universe.',
+        m3Title: lang === 'hi' ? 'मॉड्यूल 3: एकीकृत ब्रह्मांड' : 'Module 3: The Unified Universe',
+        m3Desc: lang === 'hi' ? 'उन्नत क्वांटम गतिकी और सभी भौतिकी का भव्य एकीकरण।' : 'Advanced quantum dynamics and the grand unification of all physics.'
+    }
+
+    // Grouping logic
+    const module1 = LESSONS.slice(0, 5)   // 1 to 5
+    const module2 = LESSONS.slice(5, 7)   // 6 to 7
+    const module3 = LESSONS.slice(7, 10)  // 8 to 10
+
     return (
-        <main className="container mx-auto px-6 py-24 max-w-5xl">
-            <div className="text-center mb-16">
-                <h1 className="text-4xl md:text-6xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-violet mb-4 drop-shadow-sm">
-                    {t.title}
-                </h1>
-                <p className="text-xl text-slate-400 max-w-2xl mx-auto">{t.subtitle}</p>
-            </div>
+        <main className="min-h-screen bg-[#050810] pb-24 text-white">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {LESSONS.map((lesson, index) => (
-                    <div
-                        key={lesson.id}
-                        className={`glass-panel rounded-3xl p-8 relative overflow-hidden transition-all duration-300 ${lesson.available
-                            ? 'hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] ring-1 ring-white/10 cursor-pointer group'
-                            : 'opacity-60 grayscale cursor-not-allowed border border-white/5'
-                            }`}
-                    >
-                        {/* Status Badge */}
-                        <div className="absolute top-6 right-6">
-                            {lesson.available ? (
-                                <div className="w-3 h-3 rounded-full bg-neon-cyan animate-pulse shadow-[0_0_10px_rgba(6,182,212,0.8)]" />
-                            ) : (
-                                <div className="w-3 h-3 rounded-full bg-slate-600" />
-                            )}
-                        </div>
+            <CourseHero lang={lang} totalProgress={globalProgress} />
 
-                        <div className={`font-bold tracking-widest uppercase text-sm mb-2 transition-colors ${lesson.available ? 'text-neon-blue group-hover:text-neon-cyan' : 'text-slate-500'}`}>
-                            {t.lesson} {index + 1}
-                        </div>
-                        <h3 className="text-2xl font-bold text-white mb-4 line-clamp-2">
-                            {lesson.label}
-                        </h3>
+            <div className="container mx-auto px-6 max-w-6xl mt-24">
 
-                        <div className="mt-8">
-                            {lesson.available ? (
-                                <Link
-                                    href={`/${lang}/${lesson.id}`}
-                                    className="inline-block px-6 py-2 rounded-full bg-neon-blue/20 text-neon-blue font-semibold border border-neon-blue/50 group-hover:bg-neon-blue/30 group-hover:border-neon-cyan transition-all"
-                                >
-                                    {t.start}
-                                </Link>
-                            ) : (
-                                <div className="inline-block px-6 py-2 rounded-full bg-slate-800/50 text-slate-400 font-semibold border border-slate-700">
-                                    {t.locked}
-                                </div>
-                            )}
-                        </div>
+                {/* Module 1 */}
+                <section className="mb-24">
+                    <div className="mb-8">
+                        <h2 className="text-3xl font-display font-bold text-white mb-2">{t.m1Title}</h2>
+                        <p className="text-slate-400">{t.m1Desc}</p>
                     </div>
-                ))}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {module1.map((lesson, idx) => (
+                            <PremiumLessonCard
+                                key={lesson.id}
+                                id={lesson.id}
+                                index={idx}
+                                label={lesson.label}
+                                available={lesson.available}
+                                lang={lang}
+                            />
+                        ))}
+                    </div>
+                </section>
+
+                <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-24" />
+
+                {/* Module 2 */}
+                <section className="mb-24">
+                    <div className="mb-8">
+                        <h2 className="text-3xl font-display font-bold text-white mb-2">{t.m2Title}</h2>
+                        <p className="text-slate-400">{t.m2Desc}</p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {module2.map((lesson, idx) => (
+                            <PremiumLessonCard
+                                key={lesson.id}
+                                id={lesson.id}
+                                index={idx + 5}
+                                label={lesson.label}
+                                available={lesson.available}
+                                lang={lang}
+                            />
+                        ))}
+                    </div>
+                </section>
+
+                <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-24" />
+
+                {/* Module 3 */}
+                <section className="mb-24">
+                    <div className="mb-8">
+                        <h2 className="text-3xl font-display font-bold text-white mb-2">{t.m3Title}</h2>
+                        <p className="text-slate-400">{t.m3Desc}</p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {module3.map((lesson, idx) => (
+                            <PremiumLessonCard
+                                key={lesson.id}
+                                id={lesson.id}
+                                index={idx + 7}
+                                label={lesson.label}
+                                available={lesson.available}
+                                lang={lang}
+                            />
+                        ))}
+                    </div>
+                </section>
+
             </div>
         </main>
     )
