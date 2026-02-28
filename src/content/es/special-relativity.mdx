@@ -1,0 +1,39 @@
+---
+title: "Special Relativity"
+---
+
+# Special Relativity
+
+Imagine you are standing on a train platform, and a super-fast express train zooms past you. If you could somehow see the clock inside the train, and measure the train itself while it was moving, what would you see?
+
+Before Albert Einstein, physicists believed that space and time were absolute. A clock ticks at the same speed everywhere, and a one-meter stick is always one meter long. 
+
+But Einstein realized something horrifying: **The speed of light is the only absolute thing in the universe.** No matter how fast you are moving, light always travels at exactly 299,792,458 meters per second ($c$). 
+
+Because the speed of light cannot change, something else *must* change. When objects move very fast (close to $c$), **Space** squishes and **Time** slows down! 
+
+### The Relativistic Railway
+
+We are going to simulate a train platform where the train can travel up to 99% the speed of light. Both you (standing on the platform) and a passenger (sitting on the train) have identical stopwatches.
+
+**Your Goal:** Observe how extreme velocity distorts reality.
+*   **Step 1:** Look at the two stopwatches ticking at normal speed (`0.0c`). They are synchronized.
+*   **Step 2:** Push the **Velocity Throttle** up to exactly `0.5c` (half the speed of light). What happens to the train's clock? What happens to the train's shape?
+*   **Step 3:** Push the throttle to `0.99c`. Notice how the train squishes into a pancake, and the clock almost stops! This is called **Length Contraction** and **Time Dilation**.
+*   **Step 4:** Now, click the **"View from Train"** button. Suddenly, the train passenger thinks *they* are stationary, and the *platform* is zooming backward! Whose clock is ticking slower now?
+
+<RelativisticTrain />
+
+<MathGate buttonText="Reveal the Lorentz Factor">
+  The amount of distortion is determined by the Lorentz Factor, denoted by $\gamma$ (gamma): $\gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}$. As velocity ($v$) approaches the speed of light ($c$), $\gamma$ approaches infinity. Time for the moving observer is calculated as $t' = \frac{t}{\gamma}$, meaning it gets vastly smaller (time slows down).
+</MathGate>
+
+### Checkpoint
+
+Let's test what you just experienced on the railway.
+
+<CheckpointQuiz 
+  question="You are standing on a platform, watching a train zoom by at 99% the speed of light. Compared to your watch, what happens to a clock inside the train?"
+  options='[{"text":"It ticks much faster than your watch.","isCorrect":false},{"text":"It ticks at the exact same speed as your watch.","isCorrect":false},{"text":"It ticks much slower than your watch.","isCorrect":true},{"text":"It runs backward.","isCorrect":false}]'
+  explanation="Correct! This is Time Dilation. From the perspective of a stationary observer, time moves significantly slower for an object traveling close to the speed of light."
+/>

@@ -19,12 +19,12 @@ export default async function CourseHub({ params }: { params: Promise<{ lang: st
 
     // Translations
     const t = {
-        m1Title: lang === 'hi' ? 'मॉड्यूल 1: द कोर' : 'Module 1: The Core',
-        m1Desc: lang === 'hi' ? 'पदार्थ और मूलभूत शक्तियों के निर्माण खंडों का अन्वेषण करें।' : 'Explore the building blocks of matter and the fundamental forces.',
-        m2Title: lang === 'hi' ? 'मॉड्यूल 2: द्रव्यमान, स्थान और समय' : 'Module 2: Mass, Space & Time',
-        m2Desc: lang === 'hi' ? 'सापेक्षता, द्रव्यमान की उत्पत्ति और अदृश्य ब्रह्मांड के झुकने को समझें।' : 'Understand the bending of relativity, the origins of mass, and the invisible universe.',
-        m3Title: lang === 'hi' ? 'मॉड्यूल 3: एकीकृत ब्रह्मांड' : 'Module 3: The Unified Universe',
-        m3Desc: lang === 'hi' ? 'उन्नत क्वांटम गतिकी और सभी भौतिकी का भव्य एकीकरण।' : 'Advanced quantum dynamics and the grand unification of all physics.'
+        m1Title: lang === 'hi' ? 'मॉड्यूल 1: द कोर' : lang === 'ms' ? 'Modul 1: Teras' : lang === 'fr' ? 'Module 1 : Le Cœur' : lang === 'es' ? 'Módulo 1: El Núcleo' : 'Module 1: The Core',
+        m1Desc: lang === 'hi' ? 'पदार्थ और मूलभूत शक्तियों के निर्माण खंडों का अन्वेषण करें।' : lang === 'ms' ? 'Teroka blok binaan jirim dan daya asas.' : lang === 'fr' ? 'Explorez les éléments constitutifs de la matière et les forces fondamentales.' : lang === 'es' ? 'Explora los bloques de construcción de la materia y las fuerzas fundamentales.' : 'Explore the building blocks of matter and the fundamental forces.',
+        m2Title: lang === 'hi' ? 'मॉड्यूल 2: द्रव्यमान, स्थान और समय' : lang === 'ms' ? 'Modul 2: Jisim, Ruang & Masa' : lang === 'fr' ? 'Module 2 : Masse, Espace et Temps' : lang === 'es' ? 'Módulo 2: Masa, Espacio y Tiempo' : 'Module 2: Mass, Space & Time',
+        m2Desc: lang === 'hi' ? 'सापेक्षता, द्रव्यमान की उत्पत्ति और अदृश्य ब्रह्मांड के झुकने को समझें।' : lang === 'ms' ? 'Fahami lenturan relativiti, asal-usul jisim, dan alam semesta yang ghaib.' : lang === 'fr' ? 'Comprendre la courbure de la relativité, les origines de la masse et l\'univers invisible.' : lang === 'es' ? 'Comprende la curvatura de la relatividad, los orígenes de la masa y el universo invisible.' : 'Understand the bending of relativity, the origins of mass, and the invisible universe.',
+        m3Title: lang === 'hi' ? 'मॉड्यूल 3: एकीकृत ब्रह्मांड' : lang === 'ms' ? 'Modul 3: Alam Semesta Bersepadu' : lang === 'fr' ? 'Module 3 : L\'Univers Unifié' : lang === 'es' ? 'Módulo 3: El Universo Unificado' : 'Module 3: The Unified Universe',
+        m3Desc: lang === 'hi' ? 'उन्नत क्वांटम गतिकी और सभी भौतिकी का भव्य एकीकरण।' : lang === 'ms' ? 'Dinamik kuantum lanjutan dan penyatuan agung semua fizik.' : lang === 'fr' ? 'Dynamique quantique avancée et grande unification de toute la physique.' : lang === 'es' ? 'Dinámica cuántica avanzada y la gran unificación de toda la física.' : 'Advanced quantum dynamics and the grand unification of all physics.'
     }
 
     // Grouping logic

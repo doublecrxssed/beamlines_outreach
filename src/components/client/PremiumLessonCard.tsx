@@ -28,10 +28,10 @@ export function PremiumLessonCard({ id, index, label, available, lang, completed
     }
 
     const t = {
-        lesson: lang === 'hi' ? 'पाठ' : 'Lesson',
-        locked: lang === 'hi' ? 'जल्द आ रहा है' : 'Coming Soon',
-        start: lang === 'hi' ? 'शुरू करें' : 'Start Lesson',
-        completed: lang === 'hi' ? 'पूर्ण' : 'Completed'
+        lesson: lang === 'hi' ? 'पाठ' : lang === 'ms' ? 'Pelajaran' : lang === 'fr' ? 'Leçon' : lang === 'es' ? 'Lección' : 'Lesson',
+        locked: lang === 'hi' ? 'जल्द आ रहा है' : lang === 'ms' ? 'Akan Datang' : lang === 'fr' ? 'Bientôt Disponible' : lang === 'es' ? 'Próximamente' : 'Coming Soon',
+        start: lang === 'hi' ? 'शुरू करें' : lang === 'ms' ? 'Mula Pelajaran' : lang === 'fr' ? 'Commencer' : lang === 'es' ? 'Comenzar' : 'Start Lesson',
+        completed: lang === 'hi' ? 'पूर्ण' : lang === 'ms' ? 'Selesai' : lang === 'fr' ? 'Terminé' : lang === 'es' ? 'Completado' : 'Completed'
     }
 
     // Different accents based on state

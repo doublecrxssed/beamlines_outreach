@@ -16,13 +16,16 @@ const RUNES = [
 export function CourseHero({ lang = 'en' }: { lang?: string }) {
 
     const t = {
-        titlePrefix: lang === 'hi' ? 'द' : 'The',
-        titleHighlight: lang === 'hi' ? 'बीमलाइन्स आउटरीच' : 'Beamlines Outreach',
-        titleSuffix: lang === 'hi' ? 'पाठ्यक्रम' : 'Curriculum',
+        titlePrefix: lang === 'hi' ? 'द' : lang === 'fr' ? 'Le' : lang === 'es' ? 'El' : lang === 'ms' ? '' : 'The',
+        titleHighlight: lang === 'hi' ? 'बीमलाइन्स आउटरीच' : lang === 'ms' ? 'Jangkauan Beamlines' : lang === 'fr' ? 'Programme Beamlines' : lang === 'es' ? 'Programa Beamlines' : 'Beamlines Outreach',
+        titleSuffix: lang === 'hi' ? 'पाठ्यक्रम' : lang === 'ms' ? 'Kurikulum' : lang === 'fr' ? 'Programme' : lang === 'es' ? 'Plan de Estudios' : 'Curriculum',
         subtitle: lang === 'hi'
             ? 'क्वार्क से लेकर ब्रह्मांड तक भौतिकी के मूलभूत रहस्यों का अन्वेषण करें। इंटरैक्टिव सिमुलेशन जो क्वांटम यांत्रिकी और सापेक्षता को जीवन में लाते हैं।'
-            : 'Explore the fundamental mysteries of physics, from quarks to the cosmos. Interactive simulations that bring quantum mechanics and relativity to life.',
-        status: lang === 'hi' ? 'पाठ्यक्रम की प्रगति' : 'Course Progress'
+            : lang === 'ms' ? 'Terokai misteri asas fizik, dari kuark ke kosmos. Simulasi interaktif yang menghidupkan mekanik kuantum dan relativiti.'
+                : lang === 'fr' ? 'Explorez les mystères fondamentaux de la physique, des quarks au cosmos. Des simulations interactives qui donnent vie à la mécanique quantique et à la relativité.'
+                    : lang === 'es' ? 'Explora los misterios fundamentales de la física, desde los quarks hasta el cosmos. Simulaciones interactivas que dan vida a la mecánica cuántica y la relatividad.'
+                        : 'Explore the fundamental mysteries of physics, from quarks to the cosmos. Interactive simulations that bring quantum mechanics and relativity to life.',
+        status: lang === 'hi' ? 'पाठ्यक्रम की प्रगति' : lang === 'ms' ? 'Kemajuan Kursus' : lang === 'fr' ? 'Progression' : lang === 'es' ? 'Progreso' : 'Course Progress'
     }
 
     return (

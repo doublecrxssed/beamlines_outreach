@@ -1,0 +1,39 @@
+---
+title: "Electromagnetism"
+---
+
+# Electromagnetism
+
+In the previous lesson, we used Electric and Magnetic fields to build a Particle Accelerator. But where do these magical fields come from? 
+
+For centuries, mankind thought electricity (like lightning) and magnetism (like compass needles) were completely different things. Then, a scientist named Michael Faraday realized they were two sides of the exact same coin: **Electromagnetism**.
+
+Have you ever seen a bicycle with a small light that only turns on when you pedal? There are no batteries inside! Instead, a magnet rubs against a coil of copper wire. As you pedal, the *movement* of the magnet forces electrons inside the wire to move, creating electricity. 
+
+This is called **Electromagnetic Induction**.
+
+### The Dynamo Experiment
+
+Let's act like a bicycle dynamo. We have a copper coil attached to a lightbulb, and a permanent bar magnet. 
+
+**Your Goal:** Generate enough electricity to turn on the lightbulb.
+*   **Step 1:** Grab the magnet and drop it inside the wire coil. Notice that the meter (galvanometer) doesn't move. If the magnet is *still*, no electricity is generated.
+*   **Step 2:** Now, drag the magnet back and forth through the coil. Notice the meter swinging!
+*   **Step 3:** Try dragging it slowly, then dragging it quickly. **Velocity matters.** The faster the invisible magnetic field lines cut through the copper wire, the stronger the electrical current.
+*   **Step 4:** Scrub the magnet back and forth as fast as you can until the lightbulb glows bright!
+
+<InductionCoil />
+
+<MathGate buttonText="Reveal Faraday's Law">
+  Faraday's Law of Induction states that the induced electromotive force ($\mathcal{E}$) in any closed circuit is equal to the negative of the time rate of change of the magnetic flux ($\Phi_B$) enclosed by the circuit: $\mathcal{E} = -N \frac{d\Phi_B}{dt}$. The faster the flux changes (velocity of the magnet), the higher the voltage.
+</MathGate>
+
+### Checkpoint
+
+Let's test your understanding of how to generate electricity.
+
+<CheckpointQuiz 
+  question="If you place a very strong magnet perfectly still inside a copper wire coil, how much electricity will be generated?"
+  options='[{"text":"Zero. Nothing happens.","isCorrect":true},{"text":"A small amount of electricity.","isCorrect":false},{"text":"A large amount of electricity.","isCorrect":false}]'
+  explanation="Correct! A static magnetic field does nothing to electrons. The magnetic field must be CHANGING (moving) to induce an electrical current. Motion is required!"
+/>
