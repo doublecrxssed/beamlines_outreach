@@ -9,7 +9,7 @@ export function StaticNavbar() {
                 <Link href="/" className="font-[family-name:var(--font-outfit)] font-bold text-xl tracking-wide flex items-center gap-3">
                     <span className="text-neon-blue drop-shadow-[0_0_12px_rgba(59,130,246,0.6)]">🌌</span>
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
-                        Outreach Beamlines
+                        Beamlines Outreach
                     </span>
                 </Link>
 

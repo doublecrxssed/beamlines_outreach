@@ -24,7 +24,7 @@ export function CourseHero({ lang = 'en', totalProgress = 0 }: { lang?: string, 
 
     const t = {
         titlePrefix: lang === 'hi' ? 'द' : 'The',
-        titleHighlight: lang === 'hi' ? 'आउटरीच बीमलाइन्स' : 'Outreach Beamlines',
+        titleHighlight: lang === 'hi' ? 'बीमलाइन्स आउटरीच' : 'Beamlines Outreach',
         titleSuffix: lang === 'hi' ? 'पाठ्यक्रम' : 'Curriculum',
         subtitle: lang === 'hi'
             ? 'क्वार्क से लेकर ब्रह्मांड तक भौतिकी के मूलभूत रहस्यों का अन्वेषण करें। इंटरैक्टिव सिमुलेशन जो क्वांटम यांत्रिकी और सापेक्षता को जीवन में लाते हैं।'

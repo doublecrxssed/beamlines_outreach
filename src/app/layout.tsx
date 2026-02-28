@@ -11,8 +11,8 @@ const chakraPetch = Chakra_Petch({
 });
 
 export const metadata: Metadata = {
-  title: "Outreach Beamlines",
-  description: "Educational physics platform for under-resourced schools.",
+  title: "Beamlines Outreach",
+  description: "Interactive particle physics and astrophysics outreach curriculum.",
 };
 
 export default function RootLayout({
