@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { LanguageSwitcher } from '../client/LanguageSwitcher'
-import { ProgressRing } from '../client/ProgressRing'
 
 export function StaticNavbar() {
     return (
@@ -14,7 +13,6 @@ export function StaticNavbar() {
                 </Link>
 
                 <div className="flex items-center gap-6">
-                    <ProgressRing />
                     <LanguageSwitcher />
                 </div>
             </div>

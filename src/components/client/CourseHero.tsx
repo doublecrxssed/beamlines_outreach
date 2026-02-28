@@ -1,9 +1,7 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
-import { ProgressRing } from '@/components/client/ProgressRing'
-import { useAppStore } from '@/lib/useAppStore'
 
 // Floating background physics runes for the Hero
 const RUNES = [
@@ -15,12 +13,7 @@ const RUNES = [
     { id: 6, text: 'G_{μν}', x: '45%', y: '85%', delay: 0.8 },
 ]
 
-export function CourseHero({ lang = 'en', totalProgress = 0 }: { lang?: string, totalProgress?: number }) {
-
-    // Sync the server-calculated total progress into the client's global Zustand state
-    useEffect(() => {
-        useAppStore.setState({ localProgress: totalProgress })
-    }, [totalProgress])
+export function CourseHero({ lang = 'en' }: { lang?: string }) {
 
     const t = {
         titlePrefix: lang === 'hi' ? 'द' : 'The',
@@ -96,46 +89,6 @@ export function CourseHero({ lang = 'en', totalProgress = 0 }: { lang?: string, 
                             {t.subtitle}
                         </motion.p>
                     </div>
-
-                    {/* Progress Dashboard Visualizer */}
-                    <motion.div
-                        className="flex-shrink-0 relative group"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.8, delay: 0.4, type: "spring", bounce: 0.4 }}
-                    >
-                        <div className="w-[180px] h-[180px] md:w-[220px] md:h-[220px] glass-panel rounded-full flex flex-col items-center justify-center relative ring-1 ring-white/10 hover:ring-neon-cyan/50 transition-all duration-500 shadow-[0_0_50px_rgba(0,0,0,0.5)] z-20 overflow-hidden">
-                            {/* Inner ambient glow tied to progress percentage (max 50% opacity) */}
-                            <div
-                                className="absolute inset-0 rounded-full mix-blend-screen transition-opacity duration-1000"
-                                style={{
-                                    background: `radial-gradient(circle at center, rgba(6, 182, 212, ${totalProgress / 100 * 0.4}) 0%, transparent 70%)`
-                                }}
-                            />
-
-                            <div className="absolute inset-0 flex items-center justify-center transform scale-[2.2]">
-                                <ProgressRing
-                                    percentage={totalProgress}
-                                    size={100}
-                                    strokeWidth={4}
-                                    color="#06b6d4"
-                                />
-                            </div>
-
-                            <div className="relative text-center z-10 mt-2">
-                                <div className="text-4xl font-display font-bold text-white drop-shadow-md">
-                                    {Math.round(totalProgress)}%
-                                </div>
-                                <div className="text-xs font-bold text-neon-cyan uppercase tracking-widest mt-1 opacity-80">
-                                    {t.status}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Outer decorative ring */}
-                        <div className="absolute -inset-4 border border-white/5 rounded-full animate-[spin_60s_linear_infinite] pointer-events-none" />
-                        <div className="absolute -inset-8 border border-white/5 rounded-full border-dashed animate-[spin_40s_linear_infinite_reverse] pointer-events-none" />
-                    </motion.div>
 
                 </div>
             </div>

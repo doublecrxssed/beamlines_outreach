@@ -1,7 +1,5 @@
 import { CourseHero } from '@/components/client/CourseHero'
 import { PremiumLessonCard } from '@/components/client/PremiumLessonCard'
-import { prisma } from '@/app/api/progress/route'
-import { cookies } from 'next/headers'
 
 const LESSONS = [
     { id: 'standard-model', label: 'The Standard Model', available: true },
@@ -18,29 +16,6 @@ const LESSONS = [
 
 export default async function CourseHub({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params
-
-    // Fetch global progress on the server to pass down to the Hero
-    let totalInteractions = 0
-    try {
-        const cookieStore = await cookies()
-        const deviceId = cookieStore.get('deviceId')?.value
-        if (deviceId) {
-            const user = await prisma.user.findUnique({ where: { deviceId } })
-            if (user) {
-                const aggr = await prisma.progress.aggregate({
-                    where: { userId: user.id },
-                    _sum: { interactions: true }
-                })
-                totalInteractions = aggr._sum.interactions || 0
-            }
-        }
-    } catch (e) {
-        // Silently fail if DB is uninitialized on build
-    }
-
-    // 100 interactions across 10 lessons = 100% completion (simple heuristic)
-    const rawPercentage = (totalInteractions / 100) * 100
-    const globalProgress = Math.min(rawPercentage, 100)
 
     // Translations
     const t = {
@@ -60,7 +35,7 @@ export default async function CourseHub({ params }: { params: Promise<{ lang: st
     return (
         <main className="min-h-screen bg-[#050810] pb-24 text-white">
 
-            <CourseHero lang={lang} totalProgress={globalProgress} />
+            <CourseHero lang={lang} />
 
             <div className="container mx-auto px-6 max-w-6xl mt-24">
 

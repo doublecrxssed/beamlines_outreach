@@ -5,8 +5,6 @@ import { notFound } from 'next/navigation'
 import { RevealText } from '@/components/client/RevealText'
 import { MathGate } from '@/components/client/MathGate'
 import { StandardModelSorter } from '@/components/client/StandardModelSorter'
-import { Cyclotron } from '@/components/client/Cyclotron'
-import { InductionCoil } from '@/components/client/InductionCoil'
 import { QuantumCoin } from '@/components/client/QuantumCoin'
 import { RelativisticTrain } from '@/components/client/RelativisticTrain'
 import { CheckpointQuiz } from '@/components/client/CheckpointQuiz'
@@ -32,8 +30,6 @@ export default async function TopicPage({ params }: { params: Promise<{ lang: st
                 p: (props: React.PropsWithChildren) => <RevealText>{props.children}</RevealText>,
                 MathGate: MathGate,
                 StandardModelSorter: (props: React.PropsWithChildren & { lang?: string }) => <StandardModelSorter lang={lang} {...props} />,
-                Cyclotron: (props: React.PropsWithChildren & { lang?: string }) => <Cyclotron lang={lang} {...props} />,
-                InductionCoil: (props: React.PropsWithChildren & { lang?: string }) => <InductionCoil lang={lang} {...props} />,
                 QuantumCoin: (props: React.PropsWithChildren & { lang?: string }) => <QuantumCoin lang={lang} {...props} />,
                 RelativisticTrain: (props: React.PropsWithChildren & { lang?: string }) => <RelativisticTrain lang={lang} {...props} />,
                 NeutrinoTrain: (props: React.PropsWithChildren & { lang?: string }) => <NeutrinoTrain lang={lang} {...props} />,
