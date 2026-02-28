@@ -1,8 +1,9 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ProgressRing } from '@/components/client/ProgressRing'
+import { useAppStore } from '@/lib/useAppStore'
 
 // Floating background physics runes for the Hero
 const RUNES = [
@@ -15,6 +16,11 @@ const RUNES = [
 ]
 
 export function CourseHero({ lang = 'en', totalProgress = 0 }: { lang?: string, totalProgress?: number }) {
+
+    // Sync the server-calculated total progress into the client's global Zustand state
+    useEffect(() => {
+        useAppStore.setState({ localProgress: totalProgress })
+    }, [totalProgress])
 
     const t = {
         titlePrefix: lang === 'hi' ? 'द' : 'The',
