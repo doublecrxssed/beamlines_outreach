@@ -113,7 +113,7 @@ export function PremiumLessonCard({ id, index, label, available, lang, completed
 
     if (available) {
         return (
-            <Link href={`/${lang}/courses/${id}`} className="block">
+            <Link href={`/${lang}/${id}`} className="block">
                 <motion.div
                     {...motionProps}
                     ref={cardRef}
