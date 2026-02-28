@@ -29,6 +29,12 @@ export default async function TopicPage({ params }: { params: Promise<{ lang: st
                 // Automatically wrap every standard markdown paragraph in a scroll-reveal animation
                 p: (props: React.PropsWithChildren) => <RevealText>{props.children}</RevealText>,
                 MathGate: MathGate,
+                Cyclotron: () => null,
+                InductionCoil: () => null,
+                MagneticField: () => null,
+                SymmetryGraph: () => null,
+                HiggsBazaar: () => null,
+                GravityCarousel: () => null,
                 StandardModelSorter: (props: React.PropsWithChildren & { lang?: string }) => <StandardModelSorter lang={lang} {...props} />,
                 QuantumCoin: (props: React.PropsWithChildren & { lang?: string }) => <QuantumCoin lang={lang} {...props} />,
                 RelativisticTrain: (props: React.PropsWithChildren & { lang?: string }) => <RelativisticTrain lang={lang} {...props} />,
