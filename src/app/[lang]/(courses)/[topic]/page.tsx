@@ -32,6 +32,13 @@ export default async function TopicPage({ params }: { params: Promise<{ lang: st
             components: {
                 // Automatically wrap every standard markdown paragraph in a scroll-reveal animation
                 p: (props: React.PropsWithChildren) => <RevealText>{props.children}</RevealText>,
+                h1: (props: React.PropsWithChildren) => <h1 className="text-4xl md:text-5xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-violet mb-8 pb-6 border-b border-white/10 leading-tight">{props.children}</h1>,
+                h2: (props: React.PropsWithChildren) => <h2 className="text-3xl font-display font-bold text-white mt-16 mb-6 tracking-tight">{props.children}</h2>,
+                h3: (props: React.PropsWithChildren) => <h3 className="text-2xl font-display font-bold text-neon-cyan mt-12 mb-4 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]">{props.children}</h3>,
+                ul: (props: React.PropsWithChildren) => <ul className="list-disc pl-6 space-y-3 my-8 text-slate-300 text-lg leading-relaxed marker:text-neon-cyan">{props.children}</ul>,
+                li: (props: React.PropsWithChildren) => <li className="pl-2">{props.children}</li>,
+                strong: (props: React.PropsWithChildren) => <strong className="font-bold text-white drop-shadow-sm">{props.children}</strong>,
+                blockquote: (props: React.PropsWithChildren) => <blockquote className="border-l-4 border-neon-violet pl-6 my-8 py-2 italic text-slate-400 bg-white/5 rounded-r-lg">{props.children}</blockquote>,
                 MathGate: MathGate,
                 Cyclotron: (props: React.PropsWithChildren & { lang?: string }) => <Cyclotron lang={lang} {...props} />,
                 InductionCoil: (props: React.PropsWithChildren & { lang?: string }) => <InductionCoil lang={lang} {...props} />,
