@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 export type MathLevel = 'no-math' | 'light-math' | 'full-math'
-export type Language = 'en' | 'hi'
+export type Language = 'en' | 'hi' | 'ms' | 'fr' | 'es'
 
 interface AppState {
     // STRICT UI State
