@@ -1,0 +1,22 @@
+{
+    "extends": [
+        "next/core-web-vitals",
+        "next/typescript"
+    ],
+    "rules": {
+        "react-hooks/exhaustive-deps": "warn",
+        "no-restricted-imports": [
+            "error",
+            {
+                "patterns": [
+                    {
+                        "group": [
+                            "@/components/client/*"
+                        ],
+                        "message": "Client components should not be explicitly imported into Server Components without wrapper boundaries or extreme caution."
+                    }
+                ]
+            }
+        ]
+    }
+}

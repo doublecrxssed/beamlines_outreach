@@ -1,26 +1,76 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Premium Dark Mode Colors */
+  --color-space-950: #0B0F19;
+  /* Deep Space Background */
+  --color-space-900: #111827;
+  /* Elevated Surface */
+  --color-space-800: #1F2937;
+  /* Card Background */
+
+  --color-neon-blue: #3B82F6;
+  /* Core Interactive Primary */
+  --color-neon-violet: #8B5CF6;
+  /* Core Interactive Secondary */
+  --color-neon-cyan: #06B6D4;
+  /* Accents */
+
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #E2E8F0;
+  /* Brighter for better contrast */
+
+  /* Fonts */
+  --font-sans: var(--font-chakra-petch), sans-serif;
+  --font-display: var(--font-chakra-petch), sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Glassmorphism Classes (Reusability) */
+@utility glass-panel {
+  background-color: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@utility glass-card {
+  background-color: rgba(17, 24, 39, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
+/* Base Body Application */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-space-950);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  /* 18px Base size for better readability */
+  overflow-x: hidden;
+}
+
+/* Selection and Scrollbar for Premium Feel */
+::selection {
+  background-color: rgba(59, 130, 246, 0.3);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-space-950);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-space-800);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-space-900);
 }

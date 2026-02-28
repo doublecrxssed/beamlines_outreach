@@ -1,0 +1,39 @@
+---
+title: "Quantum States"
+---
+
+# Quantum States
+
+The rules of physics we've discussed so far apply to big things: cars, magnets, apples. But when you zoom into the atomic scale, the universe stops making sense.
+
+Welcome to Quantum Mechanics.
+
+In our everyday world, objects have definite forms. A coin sitting on a table is either "Heads" or it is "Tails." But in the quantum world, particles exist in a state called **Superposition**. Until you actually look at them, they aren't one thing or the other; they are a blurry combination of *all possible states at once*.
+
+Instead of trying to imagine a particle inside a box, imagine a coin spinning very fast in mid-air. As long as it is spinning, is it Heads or Tails? It's neither! It is a blur of both.
+
+### The Quantum Coin Toss
+
+Let's do an experiment. Below is a quantum coin in superposition.
+
+**Your Goal:** Observe the system.
+*   **Step 1:** Look at the spinning coin. It is a blur of probability.
+*   **Step 2:** Click the **"Catch the Coin"** button. By interacting with it (observing it), the "wave function" collapses instantly. It is forced to pick a side!
+*   **Step 3:** Toss it a few times to see that it's random.
+*   **Step 4:** Once you've caught it 3 times, click the **"Toss 100 Coins at Once"** tab. What happens when a macroscopic observation wave forces 100 superpositions to collapse at the exact same moment?
+
+<QuantumCoin />
+
+<MathGate buttonText="Reveal Schrödinger's Equation">
+  A quantum state is described by a wave function, $\Psi(x,t)$. According to the Born Rule, the probability of finding a particle at a specific position is given by the square of the amplitude of its wave function: $P(x) = |\Psi(x,t)|^2$. Before measurement, the system evolves deterministically via Schrödinger's Equation: $i\hbar \frac{\partial}{\partial t}\Psi = \hat{H}\Psi$. Upon measurement, the wave function "collapses" into a single definite state.
+</MathGate>
+
+### Checkpoint
+
+Let's check your understanding of the Observer Effect.
+
+<CheckpointQuiz 
+  question="When a quantum particle is in 'Superposition' (like the spinning coin), what does this mean?"
+  options='[{"text":"It is rapidly switching back and forth between states.","isCorrect":false},{"text":"It exists as a combination of all possible states simultaneously.","isCorrect":true},{"text":"It has fallen asleep and stopped moving.","isCorrect":false},{"text":"We just haven't looked closely enough to see its true state.","isCorrect":false}]'
+  explanation="Correct! Quantum superposition is not just 'we don't know the state yet'—the particle literally exists as a probability blur of all states until it is forced to mathematically 'pick' one upon observation."
+/>
