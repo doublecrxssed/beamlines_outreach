@@ -9,21 +9,15 @@ import puppeteer from 'puppeteer';
   
   await page.goto('http://localhost:3000/en');
   
-  // Inject a console log into the language switcher logic
   await page.evaluate(() => {
-    // find buttons
-    const buttons = Array.from(document.querySelectorAll('button'));
-    const msButton = buttons.find(b => b.textContent.trim() === 'MS');
-    if (msButton) {
-        console.log("Found MS button, clicking...");
-        msButton.click();
-    } else {
-        console.log("Not found MS button. Buttons: " + buttons.map(b => b.textContent).join(","));
-    }
+    const p = window.location.pathname;
+    console.log("pathname:", p);
+    const existingLangs = ['en', 'hi', 'ms', 'fr', 'es'];
+    const segments = p.split('/');
+    if (segments[0] !== '') segments.unshift('');
+    console.log("segments:", segments);
+    console.log("is existing:", existingLangs.includes(segments[1]));
   });
-  
-  await page.waitForNavigation({ waitUntil: 'networkidle0' }).catch(() => {});
-  console.log("NEW URL:", page.url());
   
   await browser.close();
   process.exit(0);

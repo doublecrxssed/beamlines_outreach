@@ -7,25 +7,25 @@ export function LanguageSwitcher() {
     const router = useRouter()
 
     const existingLangs = ['en', 'hi', 'ms', 'fr', 'es']
-    const currentLang = pathname.split('/')[1]
+    const currentLang = pathname.split('/')[1] || 'en'
 
     const handleLanguageChange = (newLang: 'en' | 'hi' | 'ms' | 'fr' | 'es') => {
         if (newLang === currentLang) return
 
-        const segments = pathname.split('/')
+        // Create a regex to explicitly match the current language ONLY if it's the very first
+        // folder segment in the URI path. This prevents `usePathname()` from accidentally
+        // appending the paths randomly when the app directory hydrates.
+        const regex = new RegExp(`^\/${currentLang}(\/|$)`)
 
-        // Ensure the path correctly starts with a leading slash structure
-        if (segments[0] !== '') segments.unshift('')
-
-        // If the current path already has a language prefix, swap it. 
-        // Otherwise, insert the new language right after the root slash.
-        if (existingLangs.includes(segments[1])) {
-            segments[1] = newLang
+        let newPath;
+        if (regex.test(pathname)) {
+            newPath = pathname.replace(regex, `/${newLang}$1`)
         } else {
-            segments.splice(1, 0, newLang)
+            // Failsafe: if no existing language prefix is found, prepend the new language
+            newPath = `/${newLang}${pathname.startsWith('/') ? pathname : `/${pathname}`}`
+            newPath = newPath.replace('//', '/')
         }
 
-        const newPath = segments.join('/')
         router.push(newPath)
     }
 
