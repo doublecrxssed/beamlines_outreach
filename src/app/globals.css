@@ -26,6 +26,23 @@
   --font-display: var(--font-chakra-petch), sans-serif;
 }
 
+/* High Contrast Mode Overrides */
+:root[data-theme="high-contrast"] {
+  /* Pure black backgrounds */
+  --color-space-950: #000000;
+  --color-space-900: #000000;
+  --color-space-800: #222222;
+
+  /* Highest contrast neons */
+  --color-neon-blue: #00FFFF;
+  --color-neon-violet: #FF00FF;
+  --color-neon-cyan: #00FF00;
+
+  /* Pure white text */
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #FFFFFF;
+}
+
 /* Glassmorphism Classes (Reusability) */
 @utility glass-panel {
   background-color: rgba(30, 41, 59, 0.4);

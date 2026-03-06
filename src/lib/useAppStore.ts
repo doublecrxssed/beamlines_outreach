@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 export type MathLevel = 'no-math' | 'light-math' | 'full-math'
 export type Language = 'en' | 'hi' | 'ms' | 'fr' | 'es'
@@ -8,39 +9,55 @@ interface AppState {
     mathLevel: MathLevel
     setMathLevel: (level: MathLevel) => void
 
+    // Accessibility State
+    isHighContrast: boolean
+    toggleHighContrast: () => void
+
     // Progress State
     localProgress: number
     isComplete: boolean
     incrementProgress: (topicId: string, currentMath: string) => Promise<void>
 }
 
-export const useAppStore = create<AppState>((set) => ({
-    mathLevel: 'no-math', // Default safe initialization
-    setMathLevel: (level) => set({ mathLevel: level }),
+export const useAppStore = create<AppState>()(
+    persist(
+        (set) => ({
+            mathLevel: 'no-math', // Default safe initialization
+            setMathLevel: (level) => set({ mathLevel: level }),
 
-    localProgress: 0,
-    isComplete: false,
+            isHighContrast: false,
+            toggleHighContrast: () => set((state) => ({ isHighContrast: !state.isHighContrast })),
 
-    // Triggers the API call and visually updates the Navbar ring
-    incrementProgress: async (topicId, currentMath) => {
-        try {
-            const res = await fetch('/api/progress', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ topicId, mathLevelUsed: currentMath, interactionCount: 1 })
-            })
+            localProgress: 0,
+            isComplete: false,
 
-            if (res.ok) {
-                const data = await res.json()
-                set({
-                    localProgress: data.progress,
-                    isComplete: data.isComplete
-                })
+            // Triggers the API call and visually updates the Navbar ring
+            incrementProgress: async (topicId, currentMath) => {
+                try {
+                    const res = await fetch('/api/progress', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ topicId, mathLevelUsed: currentMath, interactionCount: 1 })
+                    })
 
-                // Phase 9 hooks for Confetti will check isComplete here
+                    if (res.ok) {
+                        const data = await res.json()
+                        set({
+                            localProgress: data.progress,
+                            isComplete: data.isComplete
+                        })
+
+                        // Phase 9 hooks for Confetti will check isComplete here
+                    }
+                } catch (e) {
+                    console.error('Failed to log progress', e)
+                }
             }
-        } catch (e) {
-            console.error('Failed to log progress', e)
+        }),
+        {
+            name: 'beamlines-storage',
+            // Only persist high contrast preference by default, don't persist progress locally unless necessary to avoid syncing issues
+            partialize: (state) => ({ isHighContrast: state.isHighContrast }),
         }
-    }
-}))
+    )
+)

@@ -3,6 +3,7 @@ import { Chakra_Petch } from "next/font/google";
 import "./globals.css";
 import "katex/dist/katex.min.css";
 import { StaticNavbar } from "@/components/server/StaticNavbar";
+import { A11yProvider } from "@/components/client/A11yProvider";
 
 const chakraPetch = Chakra_Petch({
   subsets: ["latin"],
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${chakraPetch.variable} ${chakraPetch.variable}`}>
       <body className="antialiased min-h-screen flex flex-col selection:bg-neon-blue/30 selection:text-white">
+        <A11yProvider />
         <StaticNavbar />
         {children}
       </body>
