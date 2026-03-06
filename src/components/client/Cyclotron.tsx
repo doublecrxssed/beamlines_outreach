@@ -15,73 +15,69 @@ import * as THREE from 'three'
 function DeePlates() {
     return (
         <group>
-            {/* Left Dee */}
-            <mesh position={[-2.2, 0, 0]} rotation={[0, 0, 0]}>
-                <cylinderGeometry args={[5, 5, 0.5, 32, 1, false, Math.PI / 2, Math.PI]} />
-                <meshPhysicalMaterial
+            {/* Left Dee (Flat 2D Shape) */}
+            <mesh position={[-2.2, 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+                <ringGeometry args={[0.5, 5, 32, 1, Math.PI / 2, Math.PI]} />
+                <meshBasicMaterial
                     color="#1e293b"
                     transparent
-                    opacity={0.8}
-                    roughness={0.2}
-                    metalness={0.8}
+                    opacity={0.4}
                     side={THREE.DoubleSide}
                 />
+                {/* Glowing Outline */}
+                <lineLoop>
+                    <edgesGeometry args={[new THREE.RingGeometry(0.5, 5, 32, 1, Math.PI / 2, Math.PI)]} />
+                    <lineBasicMaterial color="#3b82f6" transparent opacity={0.6} linewidth={2} />
+                </lineLoop>
             </mesh>
 
-            {/* Right Dee */}
-            <mesh position={[2.2, 0, 0]} rotation={[0, 0, 0]}>
-                <cylinderGeometry args={[5, 5, 0.5, 32, 1, false, -Math.PI / 2, Math.PI]} />
-                <meshPhysicalMaterial
+            {/* Right Dee (Flat 2D Shape) */}
+            <mesh position={[2.2, 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+                <ringGeometry args={[0.5, 5, 32, 1, -Math.PI / 2, Math.PI]} />
+                <meshBasicMaterial
                     color="#1e293b"
                     transparent
-                    opacity={0.8}
-                    roughness={0.2}
-                    metalness={0.8}
+                    opacity={0.4}
                     side={THREE.DoubleSide}
                 />
+                {/* Glowing Outline */}
+                <lineLoop>
+                    <edgesGeometry args={[new THREE.RingGeometry(0.5, 5, 32, 1, -Math.PI / 2, Math.PI)]} />
+                    <lineBasicMaterial color="#3b82f6" transparent opacity={0.6} linewidth={2} />
+                </lineLoop>
             </mesh>
 
             {/* Gap subtle visualizer */}
-            <Box args={[4.4, 0.6, 10]} position={[0, 0, 0]}>
+            <mesh position={[0, -0.1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+                <planeGeometry args={[4.4, 10]} />
                 <meshBasicMaterial color="#3b82f6" transparent opacity={0.05} />
-            </Box>
+            </mesh>
         </group>
     )
 }
 
-function MagneticFieldLines({ intensity }: { intensity: number }) {
-    // Generate static grid of points for magnetic field vectors pointing "UP" (Y-axis)
-    const lines = []
-    const spacing = 1.5
-    for (let x = -4; x <= 4; x += spacing) {
-        for (let z = -4; z <= 4; z += spacing) {
-            // Keep roughly within the circular radius of the Dees
-            if (x * x + z * z <= 20 && Math.abs(x) > 1.5) {
-                lines.push(
-                    <Line
-                        key={`bfield-${x}-${z}`}
-                        points={[new THREE.Vector3(x, -2, z), new THREE.Vector3(x, 2, z)]}
-                        color="#8b5cf6"
-                        lineWidth={2}
-                        transparent
-                        opacity={0.1 + (intensity / 100) * 0.4}
-                    />
-                )
-            }
-        }
-    }
-    return <group>{lines}</group>
+function MagneticFieldGrid({ intensity }: { intensity: number }) {
+    // A subtle pulsing base grid to represent the magnetic field crossing the plane
+    return (
+        <mesh position={[0, -0.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <circleGeometry args={[5.5, 32]} />
+            <meshBasicMaterial
+                color="#8b5cf6"
+                transparent
+                opacity={0.05 + (intensity / 100) * 0.15}
+                wireframe
+            />
+        </mesh>
+    )
 }
 
 function Proton({ electricField, magneticField, isSuccess, onError }: { electricField: number, magneticField: number, isSuccess: boolean, onError: () => void }) {
     const meshRef = useRef<THREE.Mesh>(null)
-    const { camera } = useThree()
 
     // Physics State
-    const pos = useRef(new THREE.Vector3(0.1, 0, 0)) // Start slightly offset to begin rotation
-    const vel = useRef(new THREE.Vector3(0, 0, 0))
+    const pos = useRef(new THREE.Vector3(0.01, 0, 0)) // Start slightly offset to begin rotation
     const time = useRef(0)
-    const radius = useRef(0.1)
+    const radius = useRef(0.01)
     const speed = useRef(0.05)
 
     // Reset trail
@@ -91,7 +87,7 @@ function Proton({ electricField, magneticField, isSuccess, onError }: { electric
     const E_FORCE = 0.001 + (electricField / 100) * 0.015  // Acceleration across gap
     const B_FORCE = 0.01 + (magneticField / 100) * 0.1     // Turning force inside Dees
 
-    useFrame((state, delta) => {
+    useFrame((state) => {
         if (!meshRef.current) return
 
         // If success is achieved, let particle fly off cleanly to the right
@@ -103,8 +99,8 @@ function Proton({ electricField, magneticField, isSuccess, onError }: { electric
 
         // If fields are zero, reset to center
         if (electricField === 0 && magneticField === 0) {
-            pos.current.set(0.1, 0, 0)
-            radius.current = 0.1
+            pos.current.set(0.01, 0, 0)
+            radius.current = 0.01
             speed.current = 0.05
             time.current = 0
             setTrail([])
@@ -150,25 +146,26 @@ function Proton({ electricField, magneticField, isSuccess, onError }: { electric
 
         // Update trail every few frames
         if (state.clock.elapsedTime * 60 % 3 < 1) {
-            setTrail(prev => [...prev.slice(-40), pos.current.clone()])
+            setTrail(prev => [...prev.slice(-60), pos.current.clone()])
         }
     })
 
     return (
         <group>
             {/* The particle */}
-            <Sphere ref={meshRef} args={[0.15, 16, 16]}>
-                <meshStandardMaterial color="#00ffff" emissive="#00ffff" emissiveIntensity={2} toneMapped={false} />
-            </Sphere>
+            <mesh ref={meshRef}>
+                <circleGeometry args={[0.2, 32]} />
+                <meshBasicMaterial color="#00ffff" />
+            </mesh>
 
             {/* Path Trail */}
             {trail.length > 2 && (
                 <Line
                     points={trail}
                     color={electricField > magneticField + 20 ? "#f97316" : "#00ffff"}
-                    lineWidth={1.5}
+                    lineWidth={2.5}
                     transparent
-                    opacity={0.5}
+                    opacity={0.6}
                 />
             )}
         </group>
@@ -222,11 +219,11 @@ export function Cyclotron({ lang = 'en' }: { lang?: string }) {
         <div className="w-full max-w-3xl mx-auto my-12 glass-card p-6 rounded-3xl border border-white/10 group">
             <h3 className="text-xl font-display font-medium text-white/80 mb-6 text-center">
                 {t.title}
-                <span className="block text-xs text-slate-400 mt-1 font-sans font-normal uppercase tracking-widest">3D WebGL Simulation</span>
+                <span className="block text-xs text-slate-400 mt-1 font-sans font-normal uppercase tracking-widest">WebGL Simulation</span>
             </h3>
 
             {/* 3D Canvas Viewport */}
-            <div className="relative w-full aspect-video min-h-[300px] mb-8 bg-[#020617] rounded-2xl overflow-hidden shadow-inner border border-white/5">
+            <div className="relative w-full aspect-square max-h-[450px] mx-auto mb-8 bg-[#020617] rounded-full overflow-hidden shadow-inner border-[6px] border-slate-900 border-opacity-50">
 
                 {/* Error Flash Overlay */}
                 <motion.div
@@ -235,19 +232,12 @@ export function Cyclotron({ lang = 'en' }: { lang?: string }) {
                     transition={{ duration: 0.1 }}
                 />
 
-                <Canvas camera={{ position: [0, 8, 10], fov: 45 }}>
-                    <ambientLight intensity={0.5} />
-                    <pointLight position={[10, 10, 10]} intensity={1} />
-
-                    <OrbitControls
-                        enablePan={false}
-                        enableZoom={false}
-                        minPolarAngle={Math.PI / 4}
-                        maxPolarAngle={Math.PI / 2.2}
-                    />
+                <Canvas camera={{ position: [0, 12, 0], fov: 50, up: [0, 0, -1] }}>
+                    {/* Strict Top-Down Lighting */}
+                    <ambientLight intensity={1} />
 
                     <DeePlates />
-                    <MagneticFieldLines intensity={magneticField} />
+                    <MagneticFieldGrid intensity={magneticField} />
 
                     <Proton
                         electricField={electricField}
