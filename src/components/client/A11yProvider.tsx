@@ -8,6 +8,7 @@ export function A11yProvider() {
     const isDyslexicFont = useAppStore((state) => state.isDyslexicFont)
     const isReducedMotion = useAppStore((state) => state.isReducedMotion)
     const isScreenReaderMode = useAppStore((state) => state.isScreenReaderMode)
+    const isLargeText = useAppStore((state) => state.isLargeText)
 
     const [mounted, setMounted] = useState(false)
 
@@ -33,7 +34,10 @@ export function A11yProvider() {
         if (isScreenReaderMode) root.setAttribute('data-screen-reader', 'true')
         else root.removeAttribute('data-screen-reader')
 
-    }, [isHighContrast, isDyslexicFont, isReducedMotion, isScreenReaderMode, mounted])
+        if (isLargeText) root.setAttribute('data-text-size', 'large')
+        else root.removeAttribute('data-text-size')
+
+    }, [isHighContrast, isDyslexicFont, isReducedMotion, isScreenReaderMode, isLargeText, mounted])
 
     return null
 }

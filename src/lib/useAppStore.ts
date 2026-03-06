@@ -18,6 +18,8 @@ interface AppState {
     toggleReducedMotion: () => void
     isScreenReaderMode: boolean
     toggleScreenReaderMode: () => void
+    isLargeText: boolean
+    toggleLargeText: () => void
 
     // Progress State
     localProgress: number
@@ -40,6 +42,8 @@ export const useAppStore = create<AppState>()(
             toggleReducedMotion: () => set((state) => ({ isReducedMotion: !state.isReducedMotion })),
             isScreenReaderMode: false,
             toggleScreenReaderMode: () => set((state) => ({ isScreenReaderMode: !state.isScreenReaderMode })),
+            isLargeText: false,
+            toggleLargeText: () => set((state) => ({ isLargeText: !state.isLargeText })),
 
             localProgress: 0,
             isComplete: false,
@@ -72,7 +76,8 @@ export const useAppStore = create<AppState>()(
                 isHighContrast: state.isHighContrast,
                 isDyslexicFont: state.isDyslexicFont,
                 isReducedMotion: state.isReducedMotion,
-                isScreenReaderMode: state.isScreenReaderMode
+                isScreenReaderMode: state.isScreenReaderMode,
+                isLargeText: state.isLargeText
             }),
         }
     )

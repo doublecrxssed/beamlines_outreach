@@ -2,14 +2,15 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { useAppStore } from '@/lib/useAppStore'
-import { Settings2, Eye, Type, ZapOff, Captions } from 'lucide-react'
+import { Settings2, Eye, Type, ZapOff, Captions, ZoomIn } from 'lucide-react'
 
 export function A11yMenu() {
     const {
         isHighContrast, toggleHighContrast,
         isDyslexicFont, toggleDyslexicFont,
         isReducedMotion, toggleReducedMotion,
-        isScreenReaderMode, toggleScreenReaderMode
+        isScreenReaderMode, toggleScreenReaderMode,
+        isLargeText, toggleLargeText
     } = useAppStore()
 
     const [isOpen, setIsOpen] = useState(false)
@@ -78,7 +79,7 @@ export function A11yMenu() {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={`p-2 rounded-full transition-colors flex items-center justify-center
-                    ${(isHighContrast || isDyslexicFont || isReducedMotion || isScreenReaderMode)
+                    ${(isHighContrast || isDyslexicFont || isReducedMotion || isScreenReaderMode || isLargeText)
                         ? 'bg-neon-blue/20 text-neon-blue hover:bg-neon-blue/30'
                         : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white'
                     }`}
@@ -90,10 +91,10 @@ export function A11yMenu() {
 
             {isOpen && (
                 <div
-                    className="absolute right-0 top-full mt-2 w-72 glass-card rounded-xl border border-white/10 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 origin-top-right z-50"
+                    className="absolute right-0 top-full mt-2 w-72 glass-card rounded-xl border border-white/10 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 origin-top-right z-50 h-[60vh] overflow-y-auto custom-scrollbar"
                     role="menu"
                 >
-                    <div className="px-4 py-3 border-b border-white/5 bg-white/5">
+                    <div className="px-4 py-3 border-b border-white/5 bg-white/5 sticky top-0 z-10 backdrop-blur-xl">
                         <h3 className="font-semibold text-sm text-white flex items-center gap-2">
                             <Settings2 size={16} className="text-neon-blue" />
                             Accessibility Tools
@@ -107,6 +108,13 @@ export function A11yMenu() {
                             description="Pure black backgrounds and maximum contrast neons."
                             isActive={isHighContrast}
                             onToggle={toggleHighContrast}
+                        />
+                        <A11yOption
+                            icon={ZoomIn}
+                            label="Large Text"
+                            description="Uniformly scales up the entire application interface."
+                            isActive={isLargeText}
+                            onToggle={toggleLargeText}
                         />
                         <A11yOption
                             icon={Type}

@@ -74,6 +74,11 @@
   display: block !important;
 }
 
+/* Large Text Mode Override */
+:root[data-text-size="large"] {
+  font-size: 20px !important;
+}
+
 /* Glassmorphism Classes (Reusability) */
 @utility glass-panel {
   background-color: rgba(30, 41, 59, 0.4);
