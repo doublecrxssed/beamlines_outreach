@@ -43,6 +43,37 @@
   --color-text-secondary: #FFFFFF;
 }
 
+/* Dyslexia Font Override */
+:root[data-font="dyslexic"] {
+  --font-sans: var(--font-atma), "Comic Sans MS", "Comic Sans", cursive, sans-serif;
+  --font-display: var(--font-atma), "Comic Sans MS", "Comic Sans", cursive, sans-serif;
+}
+
+/* Reduced Motion Override */
+:root[data-reduced-motion="true"] * {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* Screen Reader Visual Reveal */
+:root[data-screen-reader="true"] .sr-only-expand {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 1rem !important;
+  margin: 1rem 0 !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+  background-color: var(--color-space-800);
+  border-left: 4px solid var(--color-neon-violet);
+  border-radius: 0.5rem;
+  color: var(--color-text-primary);
+  font-size: 0.875rem;
+  display: block !important;
+}
+
 /* Glassmorphism Classes (Reusability) */
 @utility glass-panel {
   background-color: rgba(30, 41, 59, 0.4);

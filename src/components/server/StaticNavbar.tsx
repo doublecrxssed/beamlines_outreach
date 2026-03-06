@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { LanguageSwitcher } from '../client/LanguageSwitcher'
-import { HighContrastToggle } from '../client/HighContrastToggle'
+import { A11yMenu } from '../client/A11yMenu'
 
 export function StaticNavbar() {
     return (
@@ -14,7 +14,7 @@ export function StaticNavbar() {
                 </Link>
 
                 <div className="flex items-center gap-4 sm:gap-6">
-                    <HighContrastToggle />
+                    <A11yMenu />
                     <LanguageSwitcher />
                 </div>
             </div>

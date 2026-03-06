@@ -12,6 +12,12 @@ interface AppState {
     // Accessibility State
     isHighContrast: boolean
     toggleHighContrast: () => void
+    isDyslexicFont: boolean
+    toggleDyslexicFont: () => void
+    isReducedMotion: boolean
+    toggleReducedMotion: () => void
+    isScreenReaderMode: boolean
+    toggleScreenReaderMode: () => void
 
     // Progress State
     localProgress: number
@@ -25,8 +31,15 @@ export const useAppStore = create<AppState>()(
             mathLevel: 'no-math', // Default safe initialization
             setMathLevel: (level) => set({ mathLevel: level }),
 
+            // A11y Initial State
             isHighContrast: false,
             toggleHighContrast: () => set((state) => ({ isHighContrast: !state.isHighContrast })),
+            isDyslexicFont: false,
+            toggleDyslexicFont: () => set((state) => ({ isDyslexicFont: !state.isDyslexicFont })),
+            isReducedMotion: false,
+            toggleReducedMotion: () => set((state) => ({ isReducedMotion: !state.isReducedMotion })),
+            isScreenReaderMode: false,
+            toggleScreenReaderMode: () => set((state) => ({ isScreenReaderMode: !state.isScreenReaderMode })),
 
             localProgress: 0,
             isComplete: false,
@@ -46,8 +59,6 @@ export const useAppStore = create<AppState>()(
                             localProgress: data.progress,
                             isComplete: data.isComplete
                         })
-
-                        // Phase 9 hooks for Confetti will check isComplete here
                     }
                 } catch (e) {
                     console.error('Failed to log progress', e)
@@ -56,8 +67,13 @@ export const useAppStore = create<AppState>()(
         }),
         {
             name: 'beamlines-storage',
-            // Only persist high contrast preference by default, don't persist progress locally unless necessary to avoid syncing issues
-            partialize: (state) => ({ isHighContrast: state.isHighContrast }),
+            // Persist all accessibility preferences
+            partialize: (state) => ({
+                isHighContrast: state.isHighContrast,
+                isDyslexicFont: state.isDyslexicFont,
+                isReducedMotion: state.isReducedMotion,
+                isScreenReaderMode: state.isScreenReaderMode
+            }),
         }
     )
 )
