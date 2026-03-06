@@ -1,18 +1,194 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { OrbitControls, Box, Sphere, Line } from '@react-three/drei'
+import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import { motion } from 'framer-motion'
 import confetti from 'canvas-confetti'
+import * as THREE from 'three'
+
+// ----------------------------------------------------------------------------
+// 3D Scene Components
+// ----------------------------------------------------------------------------
+
+function DeePlates() {
+    return (
+        <group>
+            {/* Left Dee */}
+            <mesh position={[-2.2, 0, 0]} rotation={[0, 0, 0]}>
+                <cylinderGeometry args={[5, 5, 0.5, 32, 1, false, Math.PI / 2, Math.PI]} />
+                <meshPhysicalMaterial
+                    color="#1e293b"
+                    transparent
+                    opacity={0.8}
+                    roughness={0.2}
+                    metalness={0.8}
+                    side={THREE.DoubleSide}
+                />
+            </mesh>
+
+            {/* Right Dee */}
+            <mesh position={[2.2, 0, 0]} rotation={[0, 0, 0]}>
+                <cylinderGeometry args={[5, 5, 0.5, 32, 1, false, -Math.PI / 2, Math.PI]} />
+                <meshPhysicalMaterial
+                    color="#1e293b"
+                    transparent
+                    opacity={0.8}
+                    roughness={0.2}
+                    metalness={0.8}
+                    side={THREE.DoubleSide}
+                />
+            </mesh>
+
+            {/* Gap subtle visualizer */}
+            <Box args={[4.4, 0.6, 10]} position={[0, 0, 0]}>
+                <meshBasicMaterial color="#3b82f6" transparent opacity={0.05} />
+            </Box>
+        </group>
+    )
+}
+
+function MagneticFieldLines({ intensity }: { intensity: number }) {
+    // Generate static grid of points for magnetic field vectors pointing "UP" (Y-axis)
+    const lines = []
+    const spacing = 1.5
+    for (let x = -4; x <= 4; x += spacing) {
+        for (let z = -4; z <= 4; z += spacing) {
+            // Keep roughly within the circular radius of the Dees
+            if (x * x + z * z <= 20 && Math.abs(x) > 1.5) {
+                lines.push(
+                    <Line
+                        key={`bfield-${x}-${z}`}
+                        points={[new THREE.Vector3(x, -2, z), new THREE.Vector3(x, 2, z)]}
+                        color="#8b5cf6"
+                        lineWidth={2}
+                        transparent
+                        opacity={0.1 + (intensity / 100) * 0.4}
+                    />
+                )
+            }
+        }
+    }
+    return <group>{lines}</group>
+}
+
+function Proton({ electricField, magneticField, isSuccess, onError }: { electricField: number, magneticField: number, isSuccess: boolean, onError: () => void }) {
+    const meshRef = useRef<THREE.Mesh>(null)
+    const { camera } = useThree()
+
+    // Physics State
+    const pos = useRef(new THREE.Vector3(0.1, 0, 0)) // Start slightly offset to begin rotation
+    const vel = useRef(new THREE.Vector3(0, 0, 0))
+    const time = useRef(0)
+    const radius = useRef(0.1)
+    const speed = useRef(0.05)
+
+    // Reset trail
+    const [trail, setTrail] = useState<THREE.Vector3[]>([])
+
+    // Physics constants mapped from 0-100 sliders
+    const E_FORCE = 0.001 + (electricField / 100) * 0.015  // Acceleration across gap
+    const B_FORCE = 0.01 + (magneticField / 100) * 0.1     // Turning force inside Dees
+
+    useFrame((state, delta) => {
+        if (!meshRef.current) return
+
+        // If success is achieved, let particle fly off cleanly to the right
+        if (isSuccess) {
+            pos.current.x += 0.2
+            meshRef.current.position.copy(pos.current)
+            return
+        }
+
+        // If fields are zero, reset to center
+        if (electricField === 0 && magneticField === 0) {
+            pos.current.set(0.1, 0, 0)
+            radius.current = 0.1
+            speed.current = 0.05
+            time.current = 0
+            setTrail([])
+            meshRef.current.position.copy(pos.current)
+            return
+        }
+
+        // --- CYCLOTRON PHYSICS APPROXIMATION ---
+
+        // 1. Are we in the structural gap between the Dees? (x between -2.2 and 2.2)
+        const inGap = Math.abs(pos.current.x) < 2.2
+
+        if (inGap) {
+            // In the gap, electric field accelerates particle strictly outward (increasing radius/speed)
+            speed.current += E_FORCE
+            radius.current += E_FORCE * 5
+
+            // Move linearly across the gap
+            pos.current.x += Math.sign(pos.current.x || 1) * speed.current
+        } else {
+            // Inside the Dees, magnetic field turns the particle in a circle
+            // Angular velocity omega = v / r.  Higher B_FORCE makes tighter circles.
+
+            // If B field is extremely weak compared to speed, the radius blows up (Crash)
+            if (speed.current > B_FORCE * 2 && electricField > 90) {
+                onError()
+                return
+            }
+
+            const omega = B_FORCE
+            time.current += omega
+
+            // Circular orbit equations
+            const signX = pos.current.x > 0 ? 1 : -1
+            const centerX = signX * 2.2 // Orbit around the center of the respective Dee half
+
+            pos.current.z = Math.sin(time.current) * radius.current
+            pos.current.x = centerX + Math.cos(time.current) * radius.current * -signX
+        }
+
+        // Update mesh position
+        meshRef.current.position.copy(pos.current)
+
+        // Update trail every few frames
+        if (state.clock.elapsedTime * 60 % 3 < 1) {
+            setTrail(prev => [...prev.slice(-40), pos.current.clone()])
+        }
+    })
+
+    return (
+        <group>
+            {/* The particle */}
+            <Sphere ref={meshRef} args={[0.15, 16, 16]}>
+                <meshStandardMaterial color="#00ffff" emissive="#00ffff" emissiveIntensity={2} toneMapped={false} />
+            </Sphere>
+
+            {/* Path Trail */}
+            {trail.length > 2 && (
+                <Line
+                    points={trail}
+                    color={electricField > magneticField + 20 ? "#f97316" : "#00ffff"}
+                    lineWidth={1.5}
+                    transparent
+                    opacity={0.5}
+                />
+            )}
+        </group>
+    )
+}
+
+// ----------------------------------------------------------------------------
+// Main Component Interface
+// ----------------------------------------------------------------------------
 
 export function Cyclotron({ lang = 'en' }: { lang?: string }) {
     const [electricField, setElectricField] = useState(0)
     const [magneticField, setMagneticField] = useState(0)
+    const [hasCrashed, setHasCrashed] = useState(false)
 
-    // Derived State (Solves setState-in-effect warning)
-    const isSuccess = electricField > 85 && magneticField > 85 && Math.abs(electricField - magneticField) < 10
-    const errorState = !isSuccess && (electricField > 90 || magneticField > 90)
+    // Derived State
+    const isSuccess = electricField > 85 && magneticField > 85 && Math.abs(electricField - magneticField) < 10 && !hasCrashed
+    const errorState = hasCrashed || (!isSuccess && (electricField > 90 || magneticField > 90))
 
-    // Imperative Side Effect (Solves ref-during-render warning)
+    // Triggers
     useEffect(() => {
         if (isSuccess) {
             confetti({
@@ -24,6 +200,16 @@ export function Cyclotron({ lang = 'en' }: { lang?: string }) {
         }
     }, [isSuccess])
 
+    const handleCrash = () => {
+        setHasCrashed(true)
+        // Reset after 1 second
+        setTimeout(() => {
+            setHasCrashed(false)
+            setElectricField(0)
+            setMagneticField(0)
+        }, 1000)
+    }
+
     const t = {
         title: lang === 'hi' ? 'साइक्लोट्रॉन ट्यूनिंग' : 'Cyclotron Tuning',
         elec: lang === 'hi' ? 'विद्युत क्षेत्र (गति)' : 'Electric Field (Speed)',
@@ -32,91 +218,96 @@ export function Cyclotron({ lang = 'en' }: { lang?: string }) {
         fail: lang === 'hi' ? 'सिंक्रनाइज़ेशन खो गया. दीवार से टकराव!' : 'Desynchronization. Wall Collision!'
     }
 
-    // Dynamic spiral logic based on sliders
-    const scale = 1 + (electricField / 100) * 1.5           // Electric Field determines outer size
-    const rotation = (magneticField / 100) * 1080          // Magnetic field determines tightness/rotation speed
-
-    // Safety clamp to prevent infinite CSS recalculations
-    const clampedScale = Math.min(Math.max(scale, 1), 2.5);
-    const clampedRotation = Math.min(Math.max(rotation, 0), 1080);
-
-    // Trajectory Color: Orange (Fast/Electric) vs Blue (Tight/Magnetic)
-    const trailColor = electricField > magneticField + 20 ? 'rgba(249, 115, 22, 0.4)' : 'rgba(139, 92, 246, 0.4)'
-
     return (
-        <div className="w-full max-w-2xl mx-auto my-12 bg-gray-900/40 p-1em rounded-3xl border border-white/5 backdrop-blur-xl group">
-            <h3 className="text-xl font-display font-medium text-white/80 mb-6 px-1em text-center">
+        <div className="w-full max-w-3xl mx-auto my-12 glass-card p-6 rounded-3xl border border-white/10 group">
+            <h3 className="text-xl font-display font-medium text-white/80 mb-6 text-center">
                 {t.title}
+                <span className="block text-xs text-slate-400 mt-1 font-sans font-normal uppercase tracking-widest">3D WebGL Simulation</span>
             </h3>
 
-            {/* Cyclotron Visualizer */}
-            <div className="relative w-full aspect-square max-h-[400px] mb-8 bg-black/40 rounded-full border-4 border-slate-800 shadow-inner flex items-center justify-center overflow-hidden">
-                {/* D-Plates Grid Overlay */}
-                <div className="absolute inset-0 w-full h-full border-b-2 border-slate-700/50 -rotate-45 z-0" />
-                <div className="absolute inset-0 w-full h-full border-r-2 border-slate-700/50 -rotate-45 z-0" />
+            {/* 3D Canvas Viewport */}
+            <div className="relative w-full aspect-video min-h-[300px] mb-8 bg-[#020617] rounded-2xl overflow-hidden shadow-inner border border-white/5">
 
-                {/* Error Flash */}
+                {/* Error Flash Overlay */}
                 <motion.div
                     animate={{ opacity: errorState ? 0.3 : 0 }}
-                    className="absolute inset-0 bg-red-500 z-0 mix-blend-screen pointer-events-none"
+                    className="absolute inset-0 bg-red-500 z-10 mix-blend-screen pointer-events-none"
                     transition={{ duration: 0.1 }}
                 />
 
-                {/* The Spiral / Particle Path */}
-                <motion.div
-                    className="absolute rounded-full border border-dashed z-10"
-                    style={{ borderColor: trailColor }}
-                    animate={{
-                        width: `${clampedScale * 30}%`,
-                        height: `${clampedScale * 30}%`,
-                        rotate: clampedRotation,
-                        opacity: (electricField > 10 || magneticField > 10) ? 1 : 0
-                    }}
-                    transition={{ type: "spring", bounce: 0, duration: 0.2 }}
-                >
-                    {/* The physical proton particle traveling the path */}
-                    <div className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-neon-cyan shadow-[0_0_15px_#22d3ee] animate-pulse" />
-                </motion.div>
+                <Canvas camera={{ position: [0, 8, 10], fov: 45 }}>
+                    <ambientLight intensity={0.5} />
+                    <pointLight position={[10, 10, 10]} intensity={1} />
 
-                {/* Target Ejection Port (Lights up on success) */}
-                <div className={`absolute top-0 right-0 w-12 h-12 bg-slate-800 border-l-2 border-b-2 border-slate-700 rounded-bl-3xl z-20 transition-all duration-500 ${isSuccess ? 'bg-green-500/20 shadow-[inset_0_0_30px_#22c55e]' : ''}`} />
+                    <OrbitControls
+                        enablePan={false}
+                        enableZoom={false}
+                        minPolarAngle={Math.PI / 4}
+                        maxPolarAngle={Math.PI / 2.2}
+                    />
+
+                    <DeePlates />
+                    <MagneticFieldLines intensity={magneticField} />
+
+                    <Proton
+                        electricField={electricField}
+                        magneticField={magneticField}
+                        isSuccess={isSuccess}
+                        onError={handleCrash}
+                    />
+
+                    {/* Post Processing for Neon Glow */}
+                    <EffectComposer>
+                        <Bloom luminanceThreshold={1} mipmapBlur intensity={1.5} />
+                    </EffectComposer>
+                </Canvas>
+
+                {/* Ejection Port Indicator */}
+                <div className={`absolute top-1/2 right-4 -translate-y-1/2 w-8 h-16 border-2 border-r-0 border-slate-700/50 rounded-l-xl z-10 transition-colors duration-500 ${isSuccess ? 'bg-green-500/20 border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.4)]' : ''}`} />
             </div>
 
             {/* Tactile Sliders Panel */}
-            <div className="flex gap-1em px-1em pb-1em justify-center">
-                {/* Electric Slider */}
-                <div className="flex flex-col items-center flex-1 max-w-[200px]">
+            <div className="flex gap-6 px-4 pb-2 justify-center">
+                <div className="flex flex-col items-center flex-1 max-w-[250px]">
                     <span className="text-xs uppercase tracking-widest text-slate-400 mb-4">{t.elec}</span>
                     <input
                         type="range"
                         min="0"
                         max="100"
                         value={electricField}
-                        onChange={(e) => setElectricField(Number(e.target.value))}
-                        className="w-full accent-orange-500 hover:accent-orange-400 transition-all"
+                        onChange={(e) => {
+                            if (!hasCrashed) setElectricField(Number(e.target.value))
+                        }}
+                        className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-neon-blue"
                     />
                 </div>
 
-                {/* Magnetic Slider */}
-                <div className="flex flex-col items-center flex-1 max-w-[200px]">
+                <div className="flex flex-col items-center flex-1 max-w-[250px]">
                     <span className="text-xs uppercase tracking-widest text-slate-400 mb-4">{t.mag}</span>
                     <input
                         type="range"
                         min="0"
                         max="100"
                         value={magneticField}
-                        onChange={(e) => setMagneticField(Number(e.target.value))}
-                        className="w-full accent-violet-500 hover:accent-violet-400 transition-all"
+                        onChange={(e) => {
+                            if (!hasCrashed) setMagneticField(Number(e.target.value))
+                        }}
+                        className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-neon-violet"
                     />
                 </div>
             </div>
 
             {/* Validation Feedback Status Card */}
-            <div className="mt-4 px-1em">
+            <div className="mt-6 px-4 h-12">
                 <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: (isSuccess || errorState) ? 1 : 0, y: (isSuccess || errorState) ? 0 : 10 }}
-                    className={`w-full p-4 rounded-xl text-center font-bold text-sm tracking-wide ${isSuccess ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{
+                        opacity: (isSuccess || errorState) ? 1 : 0,
+                        scale: (isSuccess || errorState) ? 1 : 0.95
+                    }}
+                    className={`w-full py-3 rounded-xl text-center font-bold text-sm tracking-wide border 
+                        ${isSuccess ? 'bg-green-500/10 text-green-400 border-green-500/30' :
+                            errorState ? 'bg-red-500/10 text-red-400 border-red-500/30' : 'border-transparent'}`}
                 >
                     {isSuccess ? t.success : (errorState ? t.fail : '')}
                 </motion.div>
